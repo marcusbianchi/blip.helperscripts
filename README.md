@@ -5,7 +5,7 @@ Add extra attributte to track events for blip builer.
 Node.JS installed
 
 # Usage
-Put the extras that you wish to add in the file extras.json
+Put the extras that you wish to add in the file extras.json and saves in "ProcessedFile.json"
 
 ```
     node index.js <inputJson> <optional Append flag>
@@ -14,14 +14,14 @@ Put the extras that you wish to add in the file extras.json
 Examples:
 
 
-Replace extras to all events by the content of extras.json
+Replace extras of all events in the test.json by the content of extras.json
 
 ```
-    node .\index.js .\pagseguro.json
+    node index.js test.json
 ```
 
-Append extras to all events by the content of extras.json
+Append extras of all events in the test.json by the content of extras.json
 
 ```
-    node .\index.js .\pagseguro.json a
+    node index.js test.json a
 ```
