@@ -1,0 +1,19 @@
+{
+  "name": "blip.addextras",
+  "version": "1.0.0",
+  "description": "Package to add extras to the exported JSON",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcusbianchi/blip.addextras.git"
+  },
+  "author": "Marcus Bianchi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcusbianchi/blip.addextras/issues"
+  },
+  "homepage": "https://github.com/marcusbianchi/blip.addextras#readme"
+}

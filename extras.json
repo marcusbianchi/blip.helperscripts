@@ -1,0 +1,6 @@
+{
+    "userId": "{{contact.identity}}",
+    "originatorMessageId": "{{input.message@id}}",
+    "userEmail": "{{contact.email}}",
+    "userName": "{{contact.name}}"
+}
