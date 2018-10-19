@@ -30,7 +30,7 @@ var addsessionidtoscripts = function () {
     Object.keys(searchObject).forEach(function (k) {
       var searchArea = searchObject[k]
       if (searchArea['type'] && searchArea['type'] === 'TrackEvent') {
-          searchArea['label'] = "{{sessionId}}"
+          searchArea['labeleu sei '] = "{{sessionId}}"
       }
     })
     return searchObject
