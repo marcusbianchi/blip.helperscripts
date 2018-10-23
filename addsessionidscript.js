@@ -35,7 +35,7 @@ var addsessionidscript = function () {
 }
 
 function AddScripts (selectedCard, sessionscripts) {
-  for (let index = 0; index < sessionscripts.length; index++) {
+  for (let index = sessionscripts.length-1; index >= 0; index--) {
     const element = sessionscripts[index];  
     selectedCard['$leavingCustomActions'].unshift(element)  
   }
