@@ -1,4 +1,9 @@
 var addsessionidscript = function () {
+  tagSessionControl = {}
+	tagSessionControl['background'] = "#26CAEE"
+	tagSessionControl['label'] = "SessionControlPoint"
+	tagSessionControl['canChangeBackground'] = false;
+	tagSessionControl['id'] = "blip-tag-62d0f16e-9923-4f7d-b397-fb2dae20d57c";
   try {
     var fs = require('fs')
     var sessionscripts = JSON.parse(fs.readFileSync('./resources/sessionscripts.json', 'utf8'))
@@ -25,6 +30,7 @@ var addsessionidscript = function () {
       if(searchUserInput(blipblock))
       {
         AddScripts(blipblock,sessionscripts)
+        blipblock['$tags'].push(tagSessionControl)
       }
       
     })
