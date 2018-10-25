@@ -36,22 +36,25 @@ var addstandardtrackingscripts = function () {
 		}
 		Object.keys(blipJson).forEach(function (k) {
 			var blipblock = blipJson[k]
-      var name = blipblock['$title'].substring(blipblock['$title'].search(" "), blipblock['$title'].length)
+      var name = blipblock['$title'].substring(blipblock['$title'].search(" ")+1, blipblock['$title'].length)
       blipblock['$tags'] = []
+      blipblock['$leavingCustomActions'] = []
 			if (blipblock['$title'].search('\\[') != -1) {
-				AddInputScripts(blipblock, enteringTrackingEvents, name, k)
-				var possibleAnswers = searchUserInput(blipblock)
-				blipblock['$tags'].push(tagInputScripts)
-				if (possibleAnswers.length > 0) { //add only to interaction blocks
-					var possibleAnswersStr = JSON.stringify(possibleAnswers)
+				blipblock = AddInputScripts(blipblock, enteringTrackingEvents, name, k)
+        var possibleAnswers = searchUserInput(blipblock)
+        blipblock['$tags'].push(tagInputScripts)     
+        if (possibleAnswers.length > 0) { //add only to interaction blocks         
+          var possibleAnswersStr = JSON.stringify(possibleAnswers)
+         
+
 					var chooseAnswerScript = JSON.parse(fs.readFileSync('./resources/chooseAnswerScript.json', 'utf8'))
 					var chooseAnswerEvent = JSON.parse(fs.readFileSync('./resources/chooseAnswerEvent.json', 'utf8'))
 					chooseAnswerScript['settings']['source'] = chooseAnswerScript['settings']['source'].replace('#cs1#', possibleAnswersStr);
-					AddChooseAnswer(blipblock, chooseAnswerScript, name, chooseAnswerEvent)
+          blipblock = AddChooseAnswer(blipblock, chooseAnswerScript, name, chooseAnswerEvent)        
 					blipblock['$tags'].push(tagChooseAnswer)
 				}
         var lastStateUpdateEventScript = JSON.parse(fs.readFileSync('./resources/lastStateUpdateEventScript.json', 'utf8'))
-        blipblock['$leavingCustomActions'] = []
+        
 				lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + name + "\"");
 				blipblock['$leavingCustomActions'].push(lastStateUpdateEventScript)
 				blipblock['$tags'].push(taglastStateUpdateEventScript)
@@ -81,8 +84,6 @@ function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key) {
 function AddChooseAnswer(selectedCard, chooseAnswerScript, blockName, chooseAnswerEvent) {
 	chooseAnswerEvent['settings']['category'] = blockName
   selectedCard['$leavingCustomActions'] = JSON.parse(JSON.stringify([chooseAnswerScript, chooseAnswerEvent]))
-  if(blockName==' Erro nao entendi (intenção não identificada)')
-    console.log(selectedCard['$leavingCustomActions']) 
 	return selectedCard
 }
 
@@ -98,15 +99,35 @@ function searchUserInput(searchObject) {
 				element['action']['settings'] &&
 				element['action']['settings']['content'] &&
 				element['action']['settings']['content']['options']) {
-
 				for (let j = 0; j < element['action']['settings']['content']['options'].length; j++) {
 					const element1 = element['action']['settings']['content']['options'][j];
 					possibleAnswers.push(element1['text'])
 
 				}
+      }
+      
+      else if (element['action'] &&
+				element['action']['settings'] &&
+				element['action']['settings']['content'] &&
+				element['action']['settings']['content']['items']) {
+				for (let k = 0; k < element['action']['settings']['content']['items'].length; k++) {          
+          const element2 = element['action']['settings']['content']['items'][k];
+          if(element2['options']){
+            for (let n = 0; n < element2['options'].length; n++) {
+              const element3 = element2['options'][n];              
+              if(element3['label']['type']=='text/plain'){
+              
+                possibleAnswers.push(element3['label']['value'])
+              }
+            }
+          }
+				}
 			}
+
+
 		}
-	}
+  }
+  
 	return possibleAnswers
 }
 
