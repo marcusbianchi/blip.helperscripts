@@ -30,7 +30,7 @@ Append extras of all events in the test.json with the content of extras.json
 Add standard Trackings to all block that have the "[]" marking in the name
 
 <aside class="warning">
-    This script will replace any custom Entering or Leaving acionts
+    :boom:WARNING! This script will replace any custom Entering or Leaving Actions:boom:
 </aside>
 
 ## Requiriments
