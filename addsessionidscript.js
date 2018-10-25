@@ -1,7 +1,7 @@
 var addsessionidscript = function () {
   try {
     var fs = require('fs')
-    var sessionscripts = JSON.parse(fs.readFileSync('sessionscripts.json', 'utf8'))
+    var sessionscripts = JSON.parse(fs.readFileSync('./resources/sessionscripts.json', 'utf8'))
     var jsonPath = process.argv[2]
     var replace = true
     if (process.argv[3] && process.argv[3] === 'a') {
@@ -28,7 +28,7 @@ var addsessionidscript = function () {
       }
       
     })
-    fs.writeFileSync('ProcessedFileWithId.json', JSON.stringify(blipJson),{encoding:'utf8',flag:'w+'})
+    fs.writeFileSync('./output/ProcessedFileWithId.json', JSON.stringify(blipJson),{encoding:'utf8',flag:'w+'})
   } catch (error) {
       console.log(error)
   }

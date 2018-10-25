@@ -1,0 +1,11 @@
+{
+    "type": "TrackEvent",
+    "$title": "Registro de eventos - Cliques",
+    "$invalid": false,
+    "settings": {
+        "extras": {},
+        "category": "Cartao pre-pago - cliques",
+        "action": "{{chooseAnswer}}",
+        "value": "{{sessionId}}"
+    }
+}

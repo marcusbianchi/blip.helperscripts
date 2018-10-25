@@ -20,7 +20,7 @@ var addsessionidtoscripts = function () {
         blipblock['$leavingCustomActions'] = ReplaceExtras(blipblock['$leavingCustomActions'])
         blipblock['$enteringCustomActions'] = ReplaceExtras(blipblock['$enteringCustomActions'])
       })
-      fs.writeFileSync('ProcessedFileWithIdInScripts.json', JSON.stringify(blipJson),{encoding:'utf8',flag:'w+'})
+      fs.writeFileSync('./output/ProcessedFileWithIdInScripts.json', JSON.stringify(blipJson),{encoding:'utf8',flag:'w+'})
     } catch (error) {
         console.log(error)
     }

@@ -1,0 +1,24 @@
+[
+    {
+        "type": "TrackEvent",
+        "$title": "Registro de eventos - Last State",
+        "$invalid": false,
+        "settings": {
+            "extras": {},
+            "category": "Menu cliente - origem",
+            "action": "{{lastState}}",
+            "value": "{{sessionId}}"
+        }
+    },
+    {
+        "type": "TrackEvent",
+        "$title": "Registro de eventos - Exibição",
+        "$invalid": false,
+        "settings": {
+            "extras": {},
+            "category": "Menu cliente",
+            "action": "Exibicao",
+            "value": "{{sessionId}}"
+        }
+    }
+]

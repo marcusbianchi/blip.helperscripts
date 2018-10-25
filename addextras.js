@@ -1,7 +1,7 @@
 var AddExtras = function () {
   try {
     var fs = require('fs')
-    var extrasObj = JSON.parse(fs.readFileSync('extras.json', 'utf8'))
+    var extrasObj = JSON.parse(fs.readFileSync('./resources/extras.json', 'utf8'))
     var jsonPath = process.argv[2]
     var replace = true
     if (process.argv[3] && process.argv[3] === 'a') {
@@ -25,7 +25,7 @@ var AddExtras = function () {
       blipblock['$leavingCustomActions'] = ReplaceExtras(blipblock['$leavingCustomActions'], extrasObj, replace)
       blipblock['$enteringCustomActions'] = ReplaceExtras(blipblock['$enteringCustomActions'], extrasObj, replace)
     })
-    fs.writeFileSync('ProcessedFile.json', JSON.stringify(blipJson),{encoding:'utf8',flag:'w+'})
+    fs.writeFileSync('./output/ProcessedFile.json', JSON.stringify(blipJson),{encoding:'utf8',flag:'w+'})
   } catch (error) {
       console.log(error)
   }
