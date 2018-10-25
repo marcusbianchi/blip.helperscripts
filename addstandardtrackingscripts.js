@@ -50,7 +50,8 @@ var addstandardtrackingscripts = function () {
 					AddChooseAnswer(blipblock, chooseAnswerScript, name, chooseAnswerEvent)
 					blipblock['$tags'].push(tagChooseAnswer)
 				}
-				var lastStateUpdateEventScript = JSON.parse(fs.readFileSync('./resources/lastStateUpdateEventScript.json', 'utf8'))
+        var lastStateUpdateEventScript = JSON.parse(fs.readFileSync('./resources/lastStateUpdateEventScript.json', 'utf8'))
+        blipblock['$leavingCustomActions'] = []
 				lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + name + "\"");
 				blipblock['$leavingCustomActions'].push(lastStateUpdateEventScript)
 				blipblock['$tags'].push(taglastStateUpdateEventScript)
@@ -79,7 +80,9 @@ function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key) {
 
 function AddChooseAnswer(selectedCard, chooseAnswerScript, blockName, chooseAnswerEvent) {
 	chooseAnswerEvent['settings']['category'] = blockName
-	selectedCard['$leavingCustomActions'] = JSON.parse(JSON.stringify([chooseAnswerScript, chooseAnswerEvent]))
+  selectedCard['$leavingCustomActions'] = JSON.parse(JSON.stringify([chooseAnswerScript, chooseAnswerEvent]))
+  if(blockName==' Erro nao entendi (intenção não identificada)')
+    console.log(selectedCard['$leavingCustomActions']) 
 	return selectedCard
 }
 

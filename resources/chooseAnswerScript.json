@@ -1,6 +1,6 @@
 {
     "type": "ExecuteScript",
-    "$title": "Executar script",
+    "$title": "Executar script - Choose Answer",
     "$invalid": false,
     "settings": {
         "function": "run",
