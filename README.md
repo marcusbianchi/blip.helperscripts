@@ -30,7 +30,7 @@ Append extras of all events in the test.json with the content of extras.json
 Add standard Trackings to all block that have the "[]" marking in the name
 
 <aside class="warning">
-    :boom:WARNING! This script will replace any custom Entering or Leaving Actions:boom:
+    :boom: WARNING! This script will replace any custom Entering or Leaving Actions :boom:
 </aside>
 
 ## Requiriments
@@ -53,16 +53,16 @@ Examples:
 ## Standard Trackings
 
 Origem
- - category: <block name> + " - Origem"
- - action: <last block name>
+ - category: >block name< + " - Origem"
+ - action: >last block name<
 
 Exibição
- - category: <block name> + " - Origem"
+ - category: >block name< + " - Origem"
  - action: Exibicao
 
 ChooseAnswer (Only if the block contains quick replies or carrroussels)
- - category: <block name> + " - Cliques"
- - action: <choose answer> or "Entrada Manual"
+ - category: >block name< + " - Cliques"
+ - action: >choose answer< or "Entrada Manual"
 
  # AddsessionidtoScripts
  Add scripts required to track the session of the user. This scripts will be added on everyblock that has user interaction and will update the session ID if the last interacion is grater than time configured in {{config.sessionTime}}
