@@ -12,7 +12,7 @@
     },
     {
         "type": "TrackEvent",
-        "$title": "Registro de eventos - Exibição",
+        "$title": "Registro de eventos - Exibicao",
         "$invalid": false,
         "settings": {
             "extras": {},

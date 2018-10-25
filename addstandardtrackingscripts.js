@@ -71,8 +71,8 @@ var addstandardtrackingscripts = function () {
 }
 
 function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key) {
-	enteringTrackingEvents[0]['settings']['category'] = blockName
-	enteringTrackingEvents[1]['settings']['category'] = blockName
+	enteringTrackingEvents[0]['settings']['category'] = blockName + "- laststate"
+	enteringTrackingEvents[1]['settings']['category'] = blockName + "- origem"
 	if (key != "onboarding")
 		selectedCard['$enteringCustomActions'] = JSON.parse(JSON.stringify(enteringTrackingEvents))
 	else {
@@ -82,7 +82,7 @@ function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key) {
 }
 
 function AddChooseAnswer(selectedCard, chooseAnswerScript, blockName, chooseAnswerEvent) {
-	chooseAnswerEvent['settings']['category'] = blockName
+	chooseAnswerEvent['settings']['category'] = blockName + " cliques"
   selectedCard['$leavingCustomActions'] = JSON.parse(JSON.stringify([chooseAnswerScript, chooseAnswerEvent]))
 	return selectedCard
 }
