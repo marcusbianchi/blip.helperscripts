@@ -17,7 +17,7 @@
         "settings": {
             "extras": {},
             "category": "Menu cliente",
-            "action": "Exibicao",
+            "action": "exibicao",
             "value": "{{sessionId}}"
         }
     }
