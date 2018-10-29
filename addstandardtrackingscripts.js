@@ -72,8 +72,8 @@ function UpdateLastStateEvent(selectedCard, taglastStateUpdateEventScript, name)
 }
 
 function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key, tagInputScripts) {
-    enteringTrackingEvents[0]['settings']['category'] = blockName.toLowerCase() + " - laststate"
-    enteringTrackingEvents[1]['settings']['category'] = blockName.toLowerCase() + " - origem"
+    enteringTrackingEvents[0]['settings']['category'] = blockName.toLowerCase() + " - origem"
+    enteringTrackingEvents[1]['settings']['category'] = blockName.toLowerCase()
     if (key != "onboarding")
         selectedCard['$enteringCustomActions'] = JSON.parse(JSON.stringify(enteringTrackingEvents))
     else {
