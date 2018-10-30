@@ -48,7 +48,7 @@ var addstandardtrackingscripts = function() {
                 if (possibleAnswers.length > 0) { //add only to interaction blocks    
                     blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
                 }
-                if (blipblock['$title'].search('E.') == -1)
+                if (blipblock['$title'].search('\\[E') == -1)
                     blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
             }
 

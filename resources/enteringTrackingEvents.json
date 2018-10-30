@@ -4,10 +4,16 @@
         "$title": "Registro de eventos - Last State",
         "$invalid": false,
         "settings": {
-            "extras": {},
+            "extras": {
+                "userId": "{{contact.identity}}",
+                "originatorMessageId": "{{input.message@id}}",
+                "userEmail": "{{contact.email}}",
+                "userName": "{{contact.name}}",
+                "sessionId": "{{sessionId}}"
+            },
             "category": "Menu cliente - origem",
             "action": "{{lastState}}",
-            "value": "{{sessionId}}"
+            "value": "{{context.sessionId}}"
         }
     },
     {
@@ -15,10 +21,16 @@
         "$title": "Registro de eventos - Exibicao",
         "$invalid": false,
         "settings": {
-            "extras": {},
+            "extras": {
+                "userId": "{{contact.identity}}",
+                "originatorMessageId": "{{input.message@id}}",
+                "userEmail": "{{contact.email}}",
+                "userName": "{{contact.name}}",
+                "sessionId": "{{sessionId}}"
+            },
             "category": "Menu cliente",
             "action": "exibicao",
-            "value": "{{sessionId}}"
+            "value": "{{context.sessionId}}"
         }
     }
 ]
