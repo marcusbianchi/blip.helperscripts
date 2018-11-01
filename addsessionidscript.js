@@ -24,8 +24,15 @@ var addsessionidscript = function () {
       var blipblock = blipJson[k]
       if(searchUserInput(blipblock))
       {
+        var previousSaved = savePreviousActions(blipblock)
+
+        blipblock['$leavingCustomActions'] = []
         AddScripts(blipblock,sessionscripts)
         blipblock['$tags'].push(tagSessionControl)
+
+        blipblock = addPreviousScripts(blipblock,previousSaved)
+
+
       }
       
     })
@@ -33,6 +40,27 @@ var addsessionidscript = function () {
   } catch (error) {
       console.log(error)
   }
+}
+
+
+function savePreviousActions(selectedCard){
+  previousSaved = {}
+  //leavingCustomActions
+  previousSaved['leavingCustomActions'] = []
+  selectedCard['$leavingCustomActions'].forEach(function(action){
+      if(action['title']==='Executar script - lastUserInteraction' || action['title']==='Executar script - sessionId')
+          return
+      previousSaved['leavingCustomActions'].push(action)
+  })
+  return previousSaved
+}
+
+
+function addPreviousScripts(selectedCard,previousSaved){
+  previousSaved['leavingCustomActions'].forEach(function(action){
+      selectedCard['$leavingCustomActions'].unshift(action)
+  })
+  return selectedCard
 }
 
 function AddScripts (selectedCard, sessionscripts) {

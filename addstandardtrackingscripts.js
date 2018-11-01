@@ -38,10 +38,12 @@ var addstandardtrackingscripts = function() {
         }
         Object.keys(blipJson).forEach(function(k) {
             var blipblock = blipJson[k]
-            var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
-            blipblock['$tags'] = []
-            blipblock['$leavingCustomActions'] = []
+            var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()            
             if (blipblock['$title'].search('\\[') != -1) {
+                var previousSaved = savePreviousActions(blipblock,name)
+                blipblock['$enteringCustomActions'] = []
+                blipblock['$tags'] = []
+                blipblock['$leavingCustomActions'] = []
                 blipblock = AddInputScripts(blipblock, enteringTrackingEvents, name, k, tagInputScripts)
                 var possibleAnswers = searchUserInput(blipblock)
 
@@ -50,6 +52,7 @@ var addstandardtrackingscripts = function() {
                 }
                 if (blipblock['$title'].search('\\[E') == -1)
                     blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+                blipblock = addPreviousScripts(blipblock,previousSaved)
             }
 
 		})
@@ -96,6 +99,50 @@ function AddChooseAnswerScript(selectedCard, blockName, possibleAnswers, tagChoo
     return selectedCard
 }
 
+function addPreviousScripts(selectedCard,previousSaved){
+    previousSaved['leavingCustomActions'].forEach(function(action){
+        selectedCard['$leavingCustomActions'].unshift(action)
+    })
+    previousSaved['enteringCustomActions'].forEach(function(action){
+        selectedCard['$enteringCustomActions'].unshift(action)
+    })
+    previousSaved['tags'].forEach(function(tag){
+        selectedCard['$tags'].unshift(tag)
+    })
+    return selectedCard
+}
+
+function savePreviousActions(selectedCard, blockName){
+    previousSaved = {}
+    //enteringCustomActions
+    previousSaved['leavingCustomActions'] = []
+    selectedCard['$leavingCustomActions'].forEach(function(action){
+        if(action['settings']['category']===blockName)
+            return
+        if(action['settings']['category'].search(" - origem")!= -1)
+            return
+        previousSaved['leavingCustomActions'].push(action)
+    })
+    //leavingCustomActions
+    previousSaved['enteringCustomActions'] = []
+    selectedCard['$enteringCustomActions'].forEach(function(action){
+        if(action['title']==='Executar script - Choose Answer')
+            return
+        if(action['settings']['category'].search(" - cliques")!= -1)
+            return
+        previousSaved['enteringCustomActions'].push(action)
+    })
+    //tags
+    previousSaved['tags'] = []
+    selectedCard['$tags'].forEach(function(tag){
+        if(tag['label']==='ChooseAnswerScripts' ||
+           tag['label']==='InputScripts'||
+           tag['label']==='LastStateUpdateScript')
+            return
+        previousSaved['tags'].push(tag)
+    })
+    return previousSaved
+}
 
 function searchUserInput(searchObject) {
     var actions = searchObject['$contentActions']
