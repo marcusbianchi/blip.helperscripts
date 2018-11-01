@@ -82,3 +82,22 @@ Examples:
 ```
     node addsessionidscript.js test.json
 ```
+
+ # Addlaststatescript
+ Append laststateUpdate script in all the block that has a "[]" on the name.
+
+## Requiriments
+Node.JS installed
+
+## Usage
+Saves in "/output/ProcessedFileWithLaststatecript.json"
+
+```
+    node addlaststatescript.js <inputJson>
+```
+
+Examples:
+
+```
+    node addlaststatescript.js test.json
+```
