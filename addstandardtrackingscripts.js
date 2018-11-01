@@ -55,8 +55,13 @@ var addstandardtrackingscripts = function() {
                 blipblock = addPreviousScripts(blipblock,previousSaved)
             }
 
-		})
+        })
+        var previousSaved = savePreviousActions(blipJson["onboarding"],"onboarding")
+        blipJson["onboarding"]['$enteringCustomActions'] = []
+        blipJson["onboarding"]['$tags'] = []
+        blipJson["onboarding"]['$leavingCustomActions'] = []
 		blipJson["onboarding"] = UpdateLastStateEvent(blipJson["onboarding"], taglastStateUpdateEventScript, "onboarding")
+        blipJson["onboarding"] = addPreviousScripts(blipJson["onboarding"],previousSaved)
 
         fs.writeFileSync('./output/ProcessedFileWithTrackingScripts.json', JSON.stringify(blipJson), {
             encoding: 'utf8',
@@ -115,22 +120,22 @@ function addPreviousScripts(selectedCard,previousSaved){
 function savePreviousActions(selectedCard, blockName){
     previousSaved = {}
     //enteringCustomActions
-    previousSaved['leavingCustomActions'] = []
-    selectedCard['$leavingCustomActions'].forEach(function(action){
+    previousSaved['enteringCustomActions'] = []
+    selectedCard['$enteringCustomActions'].forEach(function(action){
         if(action['settings']['category']===blockName)
             return
         if(action['settings']['category'].search(" - origem")!= -1)
             return
-        previousSaved['leavingCustomActions'].push(action)
+        previousSaved['enteringCustomActions'].push(action)
     })
     //leavingCustomActions
-    previousSaved['enteringCustomActions'] = []
-    selectedCard['$enteringCustomActions'].forEach(function(action){
+    previousSaved['leavingCustomActions'] = []
+    selectedCard['$leavingCustomActions'].forEach(function(action){
         if(action['title']==='Executar script - Choose Answer')
             return
         if(action['settings']['category'].search(" - cliques")!= -1)
             return
-        previousSaved['enteringCustomActions'].push(action)
+        previousSaved['leavingCustomActions'].push(action)
     })
     //tags
     previousSaved['tags'] = []
