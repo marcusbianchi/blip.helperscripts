@@ -41,7 +41,7 @@ var addstandardtrackingscripts = function() {
         Object.keys(blipJson).forEach(function(k) {
             var blipblock = blipJson[k]
             var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()            
-            if (blipblock['$title'].search('\\[') != -1 || addtoall) {
+            if (blipblock['$title'].search('\\[') != -1|| addtoall) {
                 var previousSaved = savePreviousActions(blipblock,name)
                 blipblock['$enteringCustomActions'] = []
                 blipblock['$tags'] = []
@@ -52,10 +52,11 @@ var addstandardtrackingscripts = function() {
                 if (possibleAnswers.length > 0) { //add only to interaction blocks    
                     blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
                 }
-                if (blipblock['$title'].search('\\[E') == -1)
+                if (blipblock['$title'].search('\\[E') == -1 || addtoall)
                     blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
                 blipblock = addPreviousScripts(blipblock,previousSaved)
             }
+
 
         })
         if(!addtoall){
@@ -109,13 +110,13 @@ function AddChooseAnswerScript(selectedCard, blockName, possibleAnswers, tagChoo
 
 function addPreviousScripts(selectedCard,previousSaved){
     previousSaved['leavingCustomActions'].forEach(function(action){
-        selectedCard['$leavingCustomActions'].pop(action)
+        selectedCard['$leavingCustomActions'].push(action)
     })
     previousSaved['enteringCustomActions'].forEach(function(action){
-        selectedCard['$enteringCustomActions'].pop(action)
+        selectedCard['$enteringCustomActions'].push(action)
     })
     previousSaved['tags'].forEach(function(tag){
-        selectedCard['$tags'].pop(tag)
+        selectedCard['$tags'].push(tag)
     })
     return selectedCard
 }
@@ -135,11 +136,11 @@ function savePreviousActions(selectedCard, blockName){
     })
     //leavingCustomActions
     previousSaved['leavingCustomActions'] = []
-    selectedCard['$leavingCustomActions'].forEach(function(action){
-        if(action['settings']['category']){
-            if(action['title']==='Executar script - Choose Answer')
+    selectedCard['$leavingCustomActions'].forEach(function(action){      
+        if(action['title']==='Executar script - Choose Answer')
                 return
-            if(action['settings']['category'] && action['settings']['category'].search(" - cliques")!= -1)
+        if(action['settings']['category']){
+            if(action['settings']['category'].search(" - cliques")!= -1)
                 return
         }
         previousSaved['leavingCustomActions'].push(action)
