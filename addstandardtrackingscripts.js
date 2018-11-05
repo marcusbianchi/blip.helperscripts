@@ -86,18 +86,20 @@ var addstandardtrackingscripts = function() {
     }
 }
 
-function UpdateLastStateEvent(selectedCard, taglastStateUpdateEventScript, name) {
-    name = name.charAt(0).toUpperCase() + name.slice(1);
+function UpdateLastStateEvent(selectedCard, taglastStateUpdateEventScript, blockName) {
+    blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
     var lastStateUpdateEventScript = JSON.parse(fs.readFileSync('./resources/lastStateUpdateEventScript.json', 'utf8'))
-    lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + name + "\"");
+    lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + blockName + "\"");
     selectedCard['$leavingCustomActions'].push(lastStateUpdateEventScript)
     selectedCard['$tags'].push(taglastStateUpdateEventScript)
     return selectedCard
 }
 
 function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key, tagInputScripts) {
-    enteringTrackingEvents[0]['settings']['category'] = blockName.toLowerCase() + " - origem"
-    enteringTrackingEvents[1]['settings']['category'] = blockName.toLowerCase()
+    blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
+
+    enteringTrackingEvents[0]['settings']['category'] = blockName + " - origem"
+    enteringTrackingEvents[1]['settings']['category'] = blockName
     if (key != "onboarding")
         selectedCard['$enteringCustomActions'] = JSON.parse(JSON.stringify(enteringTrackingEvents))
     else {
@@ -108,11 +110,13 @@ function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key, t
 }
 
 function AddChooseAnswerScript(selectedCard, blockName, possibleAnswers, tagChooseAnswer) {
+    blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
+
     var possibleAnswersStr = JSON.stringify(possibleAnswers)
     var chooseAnswerScript = JSON.parse(fs.readFileSync('./resources/chooseAnswerScript.json', 'utf8'))
     var chooseAnswerEvent = JSON.parse(fs.readFileSync('./resources/chooseAnswerEvent.json', 'utf8'))
     chooseAnswerScript['settings']['source'] = chooseAnswerScript['settings']['source'].replace('#cs1#', possibleAnswersStr);
-    chooseAnswerEvent['settings']['category'] = blockName.toLowerCase() + " - cliques"
+    chooseAnswerEvent['settings']['category'] = blockName + " - cliques"
     selectedCard['$leavingCustomActions'] = JSON.parse(JSON.stringify([chooseAnswerScript, chooseAnswerEvent]))
     selectedCard['$tags'].push(tagChooseAnswer)
 
