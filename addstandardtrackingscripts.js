@@ -109,13 +109,13 @@ function AddChooseAnswerScript(selectedCard, blockName, possibleAnswers, tagChoo
 
 function addPreviousScripts(selectedCard,previousSaved){
     previousSaved['leavingCustomActions'].forEach(function(action){
-        selectedCard['$leavingCustomActions'].unshift(action)
+        selectedCard['$leavingCustomActions'].pop(action)
     })
     previousSaved['enteringCustomActions'].forEach(function(action){
-        selectedCard['$enteringCustomActions'].unshift(action)
+        selectedCard['$enteringCustomActions'].pop(action)
     })
     previousSaved['tags'].forEach(function(tag){
-        selectedCard['$tags'].unshift(tag)
+        selectedCard['$tags'].pop(tag)
     })
     return selectedCard
 }
