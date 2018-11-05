@@ -58,7 +58,7 @@ function savePreviousActions(selectedCard){
 
 function addPreviousScripts(selectedCard,previousSaved){
   previousSaved['leavingCustomActions'].forEach(function(action){
-      selectedCard['$leavingCustomActions'].unshift(action)
+      selectedCard['$leavingCustomActions'].push(action)
   })
   return selectedCard
 }
