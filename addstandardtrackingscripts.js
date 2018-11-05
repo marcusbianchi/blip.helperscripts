@@ -51,7 +51,6 @@ var addstandardtrackingscripts = function() {
                     name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()            
                 }
             }
-            name = name.charAt(0).toUpperCase() + name.slice(1);
             if (blipblock['$title'].search('\\[') != -1|| addtoall) {
                 var previousSaved = savePreviousActions(blipblock,name)
                 blipblock['$enteringCustomActions'] = []
@@ -88,6 +87,7 @@ var addstandardtrackingscripts = function() {
 }
 
 function UpdateLastStateEvent(selectedCard, taglastStateUpdateEventScript, name) {
+    name = name.charAt(0).toUpperCase() + name.slice(1);
     var lastStateUpdateEventScript = JSON.parse(fs.readFileSync('./resources/lastStateUpdateEventScript.json', 'utf8'))
     lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + name + "\"");
     selectedCard['$leavingCustomActions'].push(lastStateUpdateEventScript)
@@ -133,27 +133,29 @@ function addPreviousScripts(selectedCard,previousSaved){
 }
 
 function savePreviousActions(selectedCard, blockName){
-    previousSaved = {}
+    var previousSaved = {}
     //enteringCustomActions
     previousSaved['enteringCustomActions'] = []
     selectedCard['$enteringCustomActions'].forEach(function(action){
-        if(action['settings']['category']){
-            if(action['settings']['category']===blockName)
-                return
-            if(action['settings']['category'].search(" - origem")!= -1)
-                return
-        }
+        if(action['$title'].toLowerCase()=='Registro de eventos - Last State'.toLowerCase())
+            return
+        if(action['$title'].toLowerCase()=='Registro de eventos - Exibicao'.toLowerCase())
+            return
+    
         previousSaved['enteringCustomActions'].push(action)
     })
     //leavingCustomActions
     previousSaved['leavingCustomActions'] = []
     selectedCard['$leavingCustomActions'].forEach(function(action){      
-        if(action['title']==='Executar script - Choose Answer')
-                return
-        if(action['settings']['category']){
-            if(action['settings']['category'].search(" - cliques")!= -1)
-                return
-        }
+        if(action['$title'].toLowerCase()=='Executar script - Choose Answer'.toLowerCase())
+            return
+        
+        if(action['$title'].toLowerCase()=='Registro de eventos - Cliques'.toLowerCase())
+            return
+
+        if(action['$title'].toLowerCase()=='Executar script - Update lastState'.toLowerCase())
+            return
+        
         previousSaved['leavingCustomActions'].push(action)
     })
     //tags
