@@ -51,6 +51,7 @@ var addstandardtrackingscripts = function() {
                     name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()            
                 }
             }
+            name = name.charAt(0).toUpperCase() + name.slice(1);
             if (blipblock['$title'].search('\\[') != -1|| addtoall) {
                 var previousSaved = savePreviousActions(blipblock,name)
                 blipblock['$enteringCustomActions'] = []
@@ -88,7 +89,7 @@ var addstandardtrackingscripts = function() {
 
 function UpdateLastStateEvent(selectedCard, taglastStateUpdateEventScript, name) {
     var lastStateUpdateEventScript = JSON.parse(fs.readFileSync('./resources/lastStateUpdateEventScript.json', 'utf8'))
-    lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + name.toLowerCase() + "\"");
+    lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + name + "\"");
     selectedCard['$leavingCustomActions'].push(lastStateUpdateEventScript)
     selectedCard['$tags'].push(taglastStateUpdateEventScript)
     return selectedCard
