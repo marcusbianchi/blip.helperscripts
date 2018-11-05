@@ -42,7 +42,7 @@ var addstandardtrackingscripts = function() {
             var blipblock = blipJson[k]
             var name = ""
             if(!addtoall)
-                name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()            
+                name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()            
             else{
                 if(blipblock['$title'].search('\\]') == -1){
                     name = blipblock['$title'].toLowerCase()
