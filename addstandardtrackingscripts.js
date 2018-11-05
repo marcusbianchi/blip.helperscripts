@@ -40,7 +40,17 @@ var addstandardtrackingscripts = function() {
         }
         Object.keys(blipJson).forEach(function(k) {
             var blipblock = blipJson[k]
-            var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()            
+            var name = ""
+            if(!addtoall)
+                name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()            
+            else{
+                if(blipblock['$title'].search('\\[') == -1){
+                    name = blipblock['$title'].toLowerCase()
+                }
+                else{
+                    name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()            
+                }
+            }
             if (blipblock['$title'].search('\\[') != -1|| addtoall) {
                 var previousSaved = savePreviousActions(blipblock,name)
                 blipblock['$enteringCustomActions'] = []
