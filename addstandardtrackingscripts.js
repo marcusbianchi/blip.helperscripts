@@ -44,11 +44,11 @@ var addstandardtrackingscripts = function() {
             if(!addtoall)
                 name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()            
             else{
-                if(blipblock['$title'].search('\\[') == -1){
+                if(blipblock['$title'].search('\\]') == -1){
                     name = blipblock['$title'].toLowerCase()
                 }
                 else{
-                    name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()            
+                    name = blipblock['$title'].substring(blipblock['$title'].search("]") + 1, blipblock['$title'].length).toLowerCase()            
                 }
             }
             if (blipblock['$title'].search('\\[') != -1|| addtoall) {
