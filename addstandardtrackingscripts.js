@@ -122,19 +122,23 @@ function savePreviousActions(selectedCard, blockName){
     //enteringCustomActions
     previousSaved['enteringCustomActions'] = []
     selectedCard['$enteringCustomActions'].forEach(function(action){
-        if(action['settings']['category']===blockName)
-            return
-        if(action['settings']['category'].search(" - origem")!= -1)
-            return
+        if(action['settings']['category']){
+            if(action['settings']['category']===blockName)
+                return
+            if(action['settings']['category'].search(" - origem")!= -1)
+                return
+        }
         previousSaved['enteringCustomActions'].push(action)
     })
     //leavingCustomActions
     previousSaved['leavingCustomActions'] = []
     selectedCard['$leavingCustomActions'].forEach(function(action){
-        if(action['title']==='Executar script - Choose Answer')
-            return
-        if(action['settings']['category'].search(" - cliques")!= -1)
-            return
+        if(action['settings']['category']){
+            if(action['title']==='Executar script - Choose Answer')
+                return
+            if(action['settings']['category'] && action['settings']['category'].search(" - cliques")!= -1)
+                return
+        }
         previousSaved['leavingCustomActions'].push(action)
     })
     //tags
