@@ -23,9 +23,11 @@ var addstandardtrackingscripts = function() {
     try {
         var enteringTrackingEvents = JSON.parse(fs.readFileSync('./resources/enteringTrackingEvents.json', 'utf8'))
         var jsonPath = process.argv[2]
-
+        var addtoall = false
+        if (process.argv[3] && process.argv[3] === '-all') {
+            addtoall = true
+        }
         var blipJson = {}
-
         try {
             blipJson = JSON.parse(fs.readFileSync(jsonPath))
         } catch (error) {
@@ -39,7 +41,7 @@ var addstandardtrackingscripts = function() {
         Object.keys(blipJson).forEach(function(k) {
             var blipblock = blipJson[k]
             var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()            
-            if (blipblock['$title'].search('\\[') != -1) {
+            if (blipblock['$title'].search('\\[') != -1 || addtoall) {
                 var previousSaved = savePreviousActions(blipblock,name)
                 blipblock['$enteringCustomActions'] = []
                 blipblock['$tags'] = []
@@ -56,13 +58,14 @@ var addstandardtrackingscripts = function() {
             }
 
         })
-        var previousSaved = savePreviousActions(blipJson["onboarding"],"onboarding")
-        blipJson["onboarding"]['$enteringCustomActions'] = []
-        blipJson["onboarding"]['$tags'] = []
-        blipJson["onboarding"]['$leavingCustomActions'] = []
-		blipJson["onboarding"] = UpdateLastStateEvent(blipJson["onboarding"], taglastStateUpdateEventScript, "onboarding")
-        blipJson["onboarding"] = addPreviousScripts(blipJson["onboarding"],previousSaved)
-
+        if(!addtoall){
+            var previousSaved = savePreviousActions(blipJson["onboarding"],"onboarding")
+            blipJson["onboarding"]['$enteringCustomActions'] = []
+            blipJson["onboarding"]['$tags'] = []
+            blipJson["onboarding"]['$leavingCustomActions'] = []
+            blipJson["onboarding"] = UpdateLastStateEvent(blipJson["onboarding"], taglastStateUpdateEventScript, "onboarding")
+            blipJson["onboarding"] = addPreviousScripts(blipJson["onboarding"],previousSaved)
+        }
         fs.writeFileSync('./output/ProcessedFileWithTrackingScripts.json', JSON.stringify(blipJson), {
             encoding: 'utf8',
             flag: 'w+'
