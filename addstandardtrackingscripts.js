@@ -48,7 +48,7 @@ var addstandardtrackingscripts = function() {
                     name = blipblock['$title'].toLowerCase()
                 }
                 else{
-                    name = blipblock['$title'].substring(blipblock['$title'].search("]") + 1, blipblock['$title'].length).toLowerCase()            
+                    name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()            
                 }
             }
             if (blipblock['$title'].search('\\[') != -1|| addtoall) {
