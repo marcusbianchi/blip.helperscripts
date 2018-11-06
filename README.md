@@ -12,13 +12,13 @@ Saves in "/output/ProcessedFileWithId.json"
 ```
 
 Examples:
-Add only to "[]" marked blocks.
+Add standard Trackings only to "[]" marked blocks and sessionId checking where there is user interaction.
 
 ```
     node Addtrackingandsessionscripts.js test.json
 ```
 
-Add to all blocks.
+Add  standard Trackings to all blocks and sessionId checking where there is user interaction.
 
 ```
     node Addtrackingandsessionscripts.js test.json -all
@@ -97,6 +97,8 @@ ChooseAnswer (Only if the block contains quick replies or carrroussels)
 
 ## Requiriments
 Node.JS installed
+Bot Variable: 
+- {{config.sessionTime}}: Time in Miliseconds for the session
 
 ## Usage
 Saves in "/output/ProcessedFileWithId.json"
@@ -128,4 +130,27 @@ Examples:
 
 ```
     node addlaststatescript.js test.json
+```
+
+# Addchatbaseintegrationscripts
+ Add scripts required to integrate manually with chatnase. This scripts will be added on everyblock that has user interaction and or bot interaction and will send it to chatbase using post
+
+## Requiriments
+Node.JS installed
+Bot Variabels: 
+- {{config.chatbaseURL}}: URL to send thepost
+- {{config.chatbasekey}}: The chatbase key
+- {{config.version}}: Bot Version
+
+## Usage
+Saves in "/output/ProcessedwithChatbase.json"
+
+```
+    node addchatbaseintegrationscripts.js <inputJson>
+```
+
+Examples:
+
+```
+    node addchatbaseintegrationscripts.js test.json
 ```

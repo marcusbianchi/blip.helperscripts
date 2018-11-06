@@ -46,25 +46,16 @@ exports.addsessionidscript = (function () {
 		return selectedCard
 	}
 
-	function searchUserInput(searchObject) {
-		var actions = searchObject['$contentActions']
-		if (actions) {
-			const element = actions[actions.length - 1];
-			if (element['input']) {
-				if (!element['input']['bypass'])
-					return true;
-			}
-		}
-		return false
-	}
+
 
 	return function (blipJson) {
+        var checkuserinteraction = require ('./checkuserinteraction')
 
 		try {
             var sessionscripts = JSON.parse(fs.readFileSync('./resources/sessionscripts.json', 'utf8'))
 			Object.keys(blipJson).forEach(function (k) {
 				var blipblock = blipJson[k]
-				if (searchUserInput(blipblock)) {
+				if (checkuserinteraction.checkuserinteraction(blipblock)) {
 					var previousSaved = savePreviousActions(blipblock)
                     blipblock['$leavingCustomActions'] = []
                     blipblock['$tags'] = []
