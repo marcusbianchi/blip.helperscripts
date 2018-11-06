@@ -133,7 +133,7 @@ Examples:
 ```
 
 # Addchatbaseintegrationscripts
- Add scripts required to integrate manually with chatnase. This scripts will be added on everyblock that has user interaction and or bot interaction and will send it to chatbase using post
+ Add scripts required to integrate manually with chatnase. This scripts will be added on everyblock that has user interaction and or bot interaction and will send it to chatbase using post. Works only with blipchat
 
 ## Requiriments
 Node.JS installed
