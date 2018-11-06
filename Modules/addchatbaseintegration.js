@@ -87,7 +87,20 @@ exports.addchatbaseintegration = (function () {
 					element['action']['type'] ==='SendMessage' &&  
 					element['action']['settings']['content']  && 
 					element['action']['settings']['content']['text']) {
-					botmessages += element['action']['settings']['content']['text']+' | '
+					botmessages += element['action']['settings']['content']['text']+'\n '
+				}
+				if (element['action'] &&
+					element['action']['type'] ==='SendMessage' &&  
+					element['action']['settings']['type'] ==='application/vnd.lime.collection+json' &&  
+					element['action']['settings']['content'] ) {
+						var items = element['action']['settings']['content']['items']
+						if(items)	
+							botmessages += 'Carroussel \n '
+						for (let index = 0; index < items.length; index++) {
+							const item = items[index];	
+							if(item['header'] && item['header']['value'])				
+							botmessages += item['header']['value']['title'] +":"+ item['header']['value']['text']+' | '
+						}
 				}
 			}
 		}
