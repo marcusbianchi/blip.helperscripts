@@ -2,13 +2,13 @@ exports.addchatbaseintegration = (function () {
 	var fs = require('fs')
 
 	var chatbaseUser = {}
-	chatbaseUser['background'] = "#033FFF"
+	chatbaseUser['background'] = "#F87D42"
 	chatbaseUser['label'] = "chatbaseUserInput"
 	chatbaseUser['canChangeBackground'] = false;
 	chatbaseUser['id'] = "blip-tag-ce6a9901-5a79-4096-1205-eb072c1e5e34";
 
 	var chatbaseBot = {}
-	chatbaseBot['background'] = "#FFC2E9"
+	chatbaseBot['background'] = "#FFD98E"
 	chatbaseBot['label'] = "chatbaseBotMessage"
 	chatbaseBot['canChangeBackground'] = false;
 	chatbaseBot['id'] = "blip-tag-8cc68c9d-bdf1-45ef-9534-7824d8eef532";
