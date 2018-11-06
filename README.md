@@ -1,3 +1,29 @@
+# Addtrackingandsessionscripts
+Add standard Trackings and SessionId to all block that have the "[]" marking in the name. If you add the flag "-all" at the end will append to all blocks in the buider
+
+## Requiriments
+Node.JS installed
+
+## Usage
+Saves in "/output/ProcessedFileWithId.json"
+
+```
+    node Addtrackingandsessionscripts.js <inputJson>
+```
+
+Examples:
+Add only to "[]" marked blocks.
+
+```
+    node Addtrackingandsessionscripts.js test.json
+```
+
+Add to all blocks.
+
+```
+    node Addtrackingandsessionscripts.js test.json -all
+```
+
 # Addextras
 Add extra attributte to track events for blip builer.
 
@@ -8,7 +34,7 @@ Node.JS installed
 Put the extras that you wish to add in the file extras.json and saves in "/output/ProcessedFile.json"
 
 ```
-    node addextras.js <inputJson> <optional Append flag>
+    node addextrastoscripts.js <inputJson> <optional Append flag>
 ```
 
 Examples:
@@ -17,13 +43,13 @@ Examples:
 Replace extras of all events in the test.json by the content of extras.json
 
 ```
-    node addextras.js test.json
+    node addextrastoscripts.js test.json
 ```
 
 Append extras of all events in the test.json with the content of extras.json
 
 ```
-    node addextras.js test.json a
+    node addextrastoscripts.js test.json a
 ```
 
 # Addstandardtrackingscripts
@@ -76,13 +102,13 @@ Node.JS installed
 Saves in "/output/ProcessedFileWithId.json"
 
 ```
-    node addsessionidscript.js <inputJson>
+    node addsessionidscripts.js <inputJson>
 ```
 
 Examples:
 
 ```
-    node addsessionidscript.js test.json
+    node addsessionidscripts.js test.json
 ```
 
  # Addlaststatescript

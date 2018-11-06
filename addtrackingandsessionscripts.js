@@ -1,6 +1,6 @@
 var fs = require('fs')
 
-var addstandardtrackingscripts = function () {
+var addtrackingandsession = function () {
 
 	try {
 		var jsonPath = process.argv[2]
@@ -21,8 +21,10 @@ var addstandardtrackingscripts = function () {
 			return
 		}
 		var addstandardtracking = require ('./Modules/addstandardtracking')
-		addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
-		
+        addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
+        blipJson = JSON.parse(fs.readFileSync('./output/ProcessedFileWithTrackingScripts.json'))
+        var sessionId = require ('./Modules/addsessionid')
+        sessionId.addsessionidscript(blipJson)
 
 	} catch (error) {
 		console.log(error)
@@ -32,4 +34,4 @@ var addstandardtrackingscripts = function () {
 
 
 
-addstandardtrackingscripts()
+addtrackingandsession()
