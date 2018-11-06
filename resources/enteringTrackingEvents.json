@@ -12,8 +12,7 @@
                 "sessionId": "{{sessionId}}"
             },
             "category": "Menu cliente - origem",
-            "action": "{{lastState}}",
-            "value": "{{context.sessionId}}"
+            "action": "{{lastState}}"
         }
     },
     {
@@ -29,8 +28,7 @@
                 "sessionId": "{{sessionId}}"
             },
             "category": "Menu cliente",
-            "action": "exibicao",
-            "value": "{{context.sessionId}}"
+            "action": "Exibicao"
         }
     }
 ]
