@@ -137,7 +137,7 @@ Examples:
 
 ## Requiriments
 Node.JS installed
-Bot Variabels: 
+Bot Variables: 
 - {{config.chatbaseURL}}: URL to send thepost
 - {{config.chatbasekey}}: The chatbase key
 - {{config.version}}: Bot Version
