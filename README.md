@@ -53,7 +53,7 @@ Append extras of all events in the test.json with the content of extras.json
 ```
 
 # Addstandardtrackingscripts
-Add standard Trackings to all block that have the "[]" marking in the name. If you add the flag "-all" at the end will append to all blocks in the buider
+Add standard Trackings to all block that have the "[]" marking in the name. If you add the flag "--all" at the end will append to all blocks in the builder
 
 ## Requiriments
 Node.JS installed
@@ -75,7 +75,7 @@ Add only to "[]" marked blocks.
 Add to all blocks.
 
 ```
-    node addstandardtrackingscripts.js test.json -all
+    node addstandardtrackingscripts.js test.json --all
 ```
 
 ## Standard Trackings

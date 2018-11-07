@@ -4,9 +4,11 @@ var addstandardtrackingscripts = function () {
 
 	try {
 		var jsonPath = process.argv[2]
+		var argv = require('minimist')(process.argv.slice(3));
+
 		var addtoall = false
-		if (process.argv[3] && process.argv[3] === '-all') {
-			addtoall = true
+		if (argv['all']) {
+			addtoall = argv['all']
 		}
 		var blipJson = {}
 		try {
