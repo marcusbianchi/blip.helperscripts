@@ -58,21 +58,31 @@ exports.addchatbaseintegration = (function () {
         return previousSaved
 	}
 	
+	function IsJsonString(str) {
+		try {
+			JSON.parse(str);
+		} catch (e) {
+			return false;
+		}
+		return true;
+	}
 
-	function userinteractionPost(selectedCard, intent) {
+	function userinteractionPost(selectedCard, intent,platform) {
 		var gettimescript = JSON.parse(fs.readFileSync('./resources/gettimescript.json', 'utf8'))
 		selectedCard['$enteringCustomActions'].push(gettimescript)
         var chatbaseenteringpost = JSON.parse(fs.readFileSync('./resources/chatbaseenteringpost.json', 'utf8'))
-        chatbaseenteringpost['settings']['body'] = chatbaseenteringpost['settings']['body'].replace('#intent#',  intent );
+		chatbaseenteringpost['settings']['body'] = chatbaseenteringpost['settings']['body'].replace('#intent#',  intent );
+		chatbaseenteringpost['settings']['body'] = chatbaseenteringpost['settings']['body'].replace('#platform#',  platform );
         selectedCard['$enteringCustomActions'].push(chatbaseenteringpost)
         return selectedCard
 	}
 	
-	function botinteractionPost(selectedCard, botmessage) {
+	function botinteractionPost(selectedCard, botmessage,platform) {
 		var gettimescript = JSON.parse(fs.readFileSync('./resources/gettimescript.json', 'utf8'))
 		selectedCard['$leavingCustomActions'].push(gettimescript)
         var chatbaseleavingpost = JSON.parse(fs.readFileSync('./resources/chatbaseleavingpost.json', 'utf8'))
-        chatbaseleavingpost['settings']['body'] = chatbaseleavingpost['settings']['body'].replace('#message#',  botmessage );
+		chatbaseleavingpost['settings']['body'] = chatbaseleavingpost['settings']['body'].replace('#message#',  botmessage );
+		chatbaseleavingpost['settings']['body'] = chatbaseleavingpost['settings']['body'].replace('#platform#',  platform );
         selectedCard['$leavingCustomActions'].push(chatbaseleavingpost)
         return selectedCard
 	}
@@ -85,11 +95,15 @@ exports.addchatbaseintegration = (function () {
 				const element = actions[index];
 				if (element['action'] &&
 					element['action']['type'] ==='SendMessage' &&  
+					element['action']['settings']['type'] != "application/vnd.lime.chatstate+json" &&  
 					element['action']['settings']['content']  && 
-					element['action']['settings']['content']['text']) {
-					botmessages += element['action']['settings']['content']['text']+'\n '
+					element['action']['settings']['content']) {
+						if(IsJsonString(element['action']['settings']['content']))
+							botmessages += element['action']['settings']['content']['text']+'\n '
+						else
+							botmessages += element['action']['settings']['content']+'\n '
 				}
-				if (element['action'] &&
+				else if (element['action'] &&
 					element['action']['type'] ==='SendMessage' &&  
 					element['action']['settings']['type'] ==='application/vnd.lime.collection+json' &&  
 					element['action']['settings']['content'] ) {
@@ -107,7 +121,7 @@ exports.addchatbaseintegration = (function () {
 		return botmessages
 	}
 	
-	return function (blipJson) {
+	return function (blipJson,platform) {
         var checkuserinteraction = require ('./checkuserinteraction')
 		var checkbotinteraction = require ('./checkbotinteraction')
 		try {
@@ -128,7 +142,7 @@ exports.addchatbaseintegration = (function () {
               
 				if (checkbotinteraction.checkbotinteraction(blipblock)) {
 					botmessages = GetBotNessages(blipblock)
-					blipblock = botinteractionPost(blipblock,botmessages)
+					blipblock = botinteractionPost(blipblock,botmessages,platform)
 					blipblock['$tags'].push(chatbaseBot)
 				}
 

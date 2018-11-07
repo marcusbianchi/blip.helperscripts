@@ -5,7 +5,7 @@
     "settings": {
         "headers": {},
         "method": "POST",
-        "body": "{\n    \"api_key\": \"{{config.chatbasekey}}\",\n    \"type\": \"agent\",\n    \"user_id\": \"{{contact.identity}}\",\n    \"time_stamp\": \"{{currentTime}}\",\n    \"platform\": \"Blip chat\",\n    \"message\": \"#message#\",\n    \"version\": \"{{config.version}}\",\n    \"session_id\": \"{{sessionId}}\"\n}\n",
+        "body": "{\n    \"api_key\": \"{{config.chatbasekey}}\",\n    \"type\": \"agent\",\n    \"user_id\": \"{{contact.identity}}\",\n    \"time_stamp\": \"{{currentTime}}\",\n    \"platform\": \"#platform#\",\n    \"message\": \"#message#\",\n    \"version\": \"{{config.version}}\",\n    \"session_id\": \"{{sessionId}}\"\n}\n",
         "uri": "{{config.chatbaseURL}}"
     }
 }

@@ -2,7 +2,12 @@ var addchatbaseintegrationscripts = function () {
 
     var fs = require('fs')
     var jsonPath = process.argv[2]
+		var argv = require('minimist')(process.argv.slice(3));
 
+		var platform = 'Blip chat'
+		if (argv['platform']) {
+			platform = argv['platform']
+		}
 
     var blipJson = {}
 
@@ -13,7 +18,7 @@ var addchatbaseintegrationscripts = function () {
     }
 
     var addchatbaseintegration = require ('./Modules/addchatbaseintegration')
-    addchatbaseintegration.addchatbaseintegration(blipJson)
+    addchatbaseintegration.addchatbaseintegration(blipJson,platform)
    
 }
 

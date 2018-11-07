@@ -133,7 +133,7 @@ Examples:
 ```
 
 # Addchatbaseintegrationscripts
- Add scripts required to integrate manually with chatnase. This scripts will be added on everyblock that has user interaction and or bot interaction and will send it to chatbase using post. Works only with blipchat
+ Add scripts required to integrate manually with chatnase. This scripts will be added on everyblock that has user interaction and or bot interaction and will send it tochatbase using post. The platform is set on the command line --platform="Facebook", the default platform is "Blip chat".
 
 ## Requiriments
 Node.JS installed
@@ -153,4 +153,10 @@ Examples:
 
 ```
     node addchatbaseintegrationscripts.js test.json
+```
+
+For Facebook bot:
+
+```
+    node addchatbaseintegrationscripts.js test.json --platform="Facebook"
 ```

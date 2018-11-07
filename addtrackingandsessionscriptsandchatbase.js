@@ -10,7 +10,10 @@ var addtrackingandsessionscriptsandchatbase = function () {
 		if (argv['all']) {
 			addtoall = argv['all']
 		}
-
+		var platform = 'Blip chat'
+		if (argv['platform']) {
+			platform = argv['platform']
+		}
 		var blipJson = {}
 		try {
 			blipJson = JSON.parse(fs.readFileSync(jsonPath))
@@ -23,14 +26,15 @@ var addtrackingandsessionscriptsandchatbase = function () {
 			console.log('Unable to parse BlipJSON')
 			return
 		}
-		var addchatbaseintegration = require ('./Modules/addchatbaseintegration')
-		addchatbaseintegration.addchatbaseintegration(blipJson)
-	   
-		blipJson = JSON.parse(fs.readFileSync('./output/ProcessedwithChatbase.json'))
+
 		var addstandardtracking = require ('./Modules/addstandardtracking')
 		addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
+
+		blipJson = JSON.parse(fs.readFileSync('./output/ProcessedFileWithTrackingScripts.json'))
+		var addchatbaseintegration = require ('./Modules/addchatbaseintegration')
+		addchatbaseintegration.addchatbaseintegration(blipJson,platform)	
 		
-        blipJson = JSON.parse(fs.readFileSync('./output/ProcessedFileWithTrackingScripts.json'))
+        blipJson = JSON.parse(fs.readFileSync('./output/ProcessedwithChatbase.json'))
         var sessionId = require ('./Modules/addsessionid')
         sessionId.addsessionidscript(blipJson)
 
