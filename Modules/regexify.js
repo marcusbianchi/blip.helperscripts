@@ -9,6 +9,8 @@ exports.regexify = (function () {
 		for (let index = 0; index < words.length; index++) {
 			if (words[index].length > 2)
 				result.push(words[index])
+			else if(!isNaN(words[index]))
+				result.push(words[index])
 		}
 		return result.join(" ")
 	}
@@ -26,12 +28,18 @@ exports.regexify = (function () {
 	}
 
 	function regexifyValue(value) {
-		if (value == '.*')
+		if (value.search("\\.\\*")!==-1){
 			return value
-		var trimvalued = removeSmallwords(value)
+		}
+
+		value = emojiStrip(value)
+		value = value.trim().toLowerCase()
+		var trimvalued = removeSmallwords(value)		
 		trimvalued = trimvalued.replace('para', '')
 		trimvalued = trimvalued.replace('uma', '')
 		trimvalued = trimvalued.replace('.', '')
+		trimvalued = trimvalued.replace(';', '')
+		trimvalued = trimvalued.replace(',', '')
 		trimvalued = trimvalued.replace('?', '')
 		trimvalued = trimvalued.replace('!', '')
 		trimvalued = addOrFunction(trimvalued)
@@ -45,22 +53,21 @@ exports.regexify = (function () {
 			else if (c == "/")
 				valRegex += "|"
 			else if (/[À-ú]/.test(c))
-				valRegex += "[\\wÀ-ú]"
+				valRegex += "([À-ú]|[a-z])"
 			else
 				valRegex += c
 		}
 		valRegex += ".*)"
-		resultSet.add(value + " -> " + valRegex)
 		return valRegex
 	}
 
 	function regexifyValues(values) {
 		for (let index = 0; index < values.length; index++) {
 			var val = values[index];
-			//remove emoticons
-			val = emojiStrip(val)
-			val = val.trim().toLowerCase()
+			//remove emoticons			
 			values[index] = regexifyValue(val)
+			resultSet.add(val + " -> " + values[index])
+
 		}
 		return values;
 	}
