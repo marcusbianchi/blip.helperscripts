@@ -1,32 +1,39 @@
 # Contents
 
 - [Regexifybot](#regexifybot)
-  * [Requiriments](#requiriments)
+  * [Requirements](#requirements)
   * [Usage](#usage)
+    + [Examples](#examples)
 - [Addtrackingandsessionscripts](#addtrackingandsessionscripts)
-  * [Requiriments](#requiriments-1)
+  * [Requirements](#requirements-1)
   * [Usage](#usage-1)
+    + [Examples](#examples-1)
 - [Addextras](#addextras)
-  * [Requiriments](#requiriments-2)
+  * [Requirements](#requirements-2)
   * [Usage](#usage-2)
+    + [Examples](#examples-2)
 - [Addstandardtrackingscripts](#addstandardtrackingscripts)
-  * [Requiriments](#requiriments-3)
+  * [Requirements](#requirements-3)
   * [Usage](#usage-3)
+    + [Examples](#examples-3)
   * [Standard Trackings](#standard-trackings)
 - [AddsessionidtoScripts](#addsessionidtoscripts)
-  * [Requiriments](#requiriments-4)
+  * [Requirements](#requirements-4)
   * [Usage](#usage-4)
+    + [Examples](#examples-4)
 - [Addlaststatescript](#addlaststatescript)
-  * [Requiriments](#requiriments-5)
+  * [Requirements](#requirements-5)
   * [Usage](#usage-5)
+    + [Examples](#examples-5)
 - [Addchatbaseintegrationscripts](#addchatbaseintegrationscripts)
-  * [Requiriments](#requiriments-6)
+  * [Requirements](#requirements-6)
   * [Usage](#usage-6)
+    + [Examples](#examples-6)
 
 # Regexifybot
 Turns all the conditions to from a specific bot that check the user input into regex expressions. Can also be used to turn a sigle expression on a regex for blip
 
-## Requiriments
+## Requirements
 Node.JS installed
 
 ## Usage
@@ -45,7 +52,7 @@ Returns the regex expressions on the command line
     node regexifybot.js --value="<expression>"
 ```
 
-Examples:
+### Examples
 Regexify an entire bot:
 ```
     npm install
@@ -61,7 +68,7 @@ Regexigy a single expression:
 # Addtrackingandsessionscripts
 Add standard Trackings and SessionId to all block that have the "[]" marking in the name. If you add the flag "-all" at the end will append to all blocks in the buider
 
-## Requiriments
+## Requirements
 Node.JS installed
 
 ## Usage
@@ -72,7 +79,7 @@ Saves in "/output/ProcessedFileWithId.json"
     node Addtrackingandsessionscripts.js <inputJson>
 ```
 
-Examples:
+### Examples
 Add standard Trackings only to "[]" marked blocks and sessionId checking where there is user interaction.
 
 ```
@@ -90,7 +97,7 @@ Add  standard Trackings to all blocks and sessionId checking where there is user
 # Addextras
 Add extra attributte to track events for blip builer.
 
-## Requiriments
+## Requirements
 Node.JS installed
 
 ## Usage
@@ -101,9 +108,7 @@ Put the extras that you wish to add in the file extras.json and saves in "/outpu
     node addextrastoscripts.js <inputJson> <optional Append flag>
 ```
 
-Examples:
-
-
+### Examples
 Replace extras of all events in the test.json by the content of extras.json
 
 ```
@@ -121,7 +126,7 @@ Append extras of all events in the test.json with the content of extras.json
 # Addstandardtrackingscripts
 Add standard Trackings to all block that have the "[]" marking in the name. If you add the flag "--all" at the end will append to all blocks in the builder
 
-## Requiriments
+## Requirements
 Node.JS installed
 
 ## Usage
@@ -132,7 +137,7 @@ Saves in "/output/ProcessedFileWithTrackingScripts.json"
     node addstandardtrackingscripts.js <inputJson>
 ```
 
-Examples:
+### Examples
 Add only to "[]" marked blocks.
 
 ```
@@ -163,7 +168,7 @@ ChooseAnswer (Only if the block contains quick replies or carrroussels)
  # AddsessionidtoScripts
  Add scripts required to track the session of the user. This scripts will be added on everyblock that has user interaction and will update the session ID if the last interacion is grater than time configured in {{config.sessionTime}}
 
-## Requiriments
+## Requirements
 Node.JS installed
 Bot Variable: 
 - {{config.sessionTime}}: Time in Miliseconds for the session
@@ -176,17 +181,17 @@ Saves in "/output/ProcessedFileWithId.json"
    node addsessionidscripts.js <inputJson>
 ```
 
-Examples:
+### Examples
 
 ```
     npm install
     node addsessionidscripts.js test.json
 ```
 
- # Addlaststatescript
+# Addlaststatescript
  Append laststateUpdate script in all the block that has a "[]" on the name.
 
-## Requiriments
+## Requirements
 Node.JS installed
 
 ## Usage
@@ -197,7 +202,7 @@ Saves in "/output/ProcessedFileWithLaststatecript.json"
     node addlaststatescript.js <inputJson>
 ```
 
-Examples:
+### Examples
 
 ```
     npm install
@@ -207,7 +212,7 @@ Examples:
 # Addchatbaseintegrationscripts
  Add scripts required to integrate manually with chatnase. This scripts will be added on everyblock that has user interaction and or bot interaction and will send it tochatbase using post. The platform is set on the command line --platform="Facebook", the default platform is "Blip chat".
 
-## Requiriments
+## Requirements
 Node.JS installed
 Bot Variables: 
 - {{config.chatbaseURL}}: URL to send thepost
@@ -222,7 +227,7 @@ Saves in "/output/ProcessedwithChatbase.json"
     node addchatbaseintegrationscripts.js <inputJson>
 ```
 
-Examples:
+### Examples
 
 ```
     npm install
