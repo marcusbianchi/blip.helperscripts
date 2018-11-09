@@ -1,3 +1,26 @@
+- [Regexifybot](#regexifybot)
+  * [Requiriments](#requiriments)
+  * [Usage](#usage)
+- [Addtrackingandsessionscripts](#addtrackingandsessionscripts)
+  * [Requiriments](#requiriments-1)
+  * [Usage](#usage-1)
+- [Addextras](#addextras)
+  * [Requiriments](#requiriments-2)
+  * [Usage](#usage-2)
+- [Addstandardtrackingscripts](#addstandardtrackingscripts)
+  * [Requiriments](#requiriments-3)
+  * [Usage](#usage-3)
+  * [Standard Trackings](#standard-trackings)
+- [AddsessionidtoScripts](#addsessionidtoscripts)
+  * [Requiriments](#requiriments-4)
+  * [Usage](#usage-4)
+- [Addlaststatescript](#addlaststatescript)
+  * [Requiriments](#requiriments-5)
+  * [Usage](#usage-5)
+- [Addchatbaseintegrationscripts](#addchatbaseintegrationscripts)
+  * [Requiriments](#requiriments-6)
+  * [Usage](#usage-6)
+
 # Regexifybot
 Turns all the conditions to from a specific bot that check the user input into regex expressions. Can also be used to turn a sigle expression on a regex for blip
 
