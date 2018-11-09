@@ -1,3 +1,5 @@
+# Contents
+
 - [Regexifybot](#regexifybot)
   * [Requiriments](#requiriments)
   * [Usage](#usage)
