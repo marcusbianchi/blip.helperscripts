@@ -1,3 +1,38 @@
+# Regexifybot
+Turns all the conditions to from a specific bot that check the user input into regex expressions. Can also be used to turn a sigle expression on a regex for blip
+
+## Requiriments
+Node.JS installed
+
+## Usage
+Saves the processed bot in "/output/ProcessedwithRegex.json" and the resulting regex for audit in "/output/regex.json"
+
+```
+    npm install
+    node regexifybot.js <inputJson>
+```
+Or:
+
+Returns the regex expressions on the command line
+
+```
+    npm install
+    node regexifybot.js --value="<expression>"
+```
+
+Examples:
+Regexify an entire bot:
+```
+    npm install
+    node regexifybot.js test.json
+```
+
+Regexigy a single expression:
+```
+    npm install
+    node regexifybot.js --value="saque automático"
+```
+
 # Addtrackingandsessionscripts
 Add standard Trackings and SessionId to all block that have the "[]" marking in the name. If you add the flag "-all" at the end will append to all blocks in the buider
 
@@ -8,6 +43,7 @@ Node.JS installed
 Saves in "/output/ProcessedFileWithId.json"
 
 ```
+    npm install
     node Addtrackingandsessionscripts.js <inputJson>
 ```
 
@@ -15,12 +51,14 @@ Examples:
 Add standard Trackings only to "[]" marked blocks and sessionId checking where there is user interaction.
 
 ```
+    npm install
     node Addtrackingandsessionscripts.js test.json
 ```
 
 Add  standard Trackings to all blocks and sessionId checking where there is user interaction.
 
 ```
+    npm install
     node Addtrackingandsessionscripts.js test.json -all
 ```
 
@@ -34,6 +72,7 @@ Node.JS installed
 Put the extras that you wish to add in the file extras.json and saves in "/output/ProcessedFile.json"
 
 ```
+    npm install
     node addextrastoscripts.js <inputJson> <optional Append flag>
 ```
 
@@ -43,12 +82,14 @@ Examples:
 Replace extras of all events in the test.json by the content of extras.json
 
 ```
+    npm install
     node addextrastoscripts.js test.json
 ```
 
 Append extras of all events in the test.json with the content of extras.json
 
 ```
+    npm install
     node addextrastoscripts.js test.json a
 ```
 
@@ -62,6 +103,7 @@ Node.JS installed
 Saves in "/output/ProcessedFileWithTrackingScripts.json"
 
 ```
+    npm install
     node addstandardtrackingscripts.js <inputJson>
 ```
 
@@ -69,6 +111,7 @@ Examples:
 Add only to "[]" marked blocks.
 
 ```
+    npm install
     node addstandardtrackingscripts.js test.json
 ```
 
@@ -104,12 +147,14 @@ Bot Variable:
 Saves in "/output/ProcessedFileWithId.json"
 
 ```
-    node addsessionidscripts.js <inputJson>
+   npm install
+   node addsessionidscripts.js <inputJson>
 ```
 
 Examples:
 
 ```
+    npm install
     node addsessionidscripts.js test.json
 ```
 
@@ -123,12 +168,14 @@ Node.JS installed
 Saves in "/output/ProcessedFileWithLaststatecript.json"
 
 ```
+    npm install
     node addlaststatescript.js <inputJson>
 ```
 
 Examples:
 
 ```
+    npm install
     node addlaststatescript.js test.json
 ```
 
@@ -146,17 +193,20 @@ Bot Variables:
 Saves in "/output/ProcessedwithChatbase.json"
 
 ```
+    npm install
     node addchatbaseintegrationscripts.js <inputJson>
 ```
 
 Examples:
 
 ```
+    npm install
     node addchatbaseintegrationscripts.js test.json
 ```
 
 For Facebook bot:
 
-```
+```   
+    npm install
     node addchatbaseintegrationscripts.js test.json --platform="Facebook"
 ```
