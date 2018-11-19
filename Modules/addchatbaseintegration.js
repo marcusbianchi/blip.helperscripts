@@ -95,8 +95,7 @@ exports.addchatbaseintegration = (function () {
 				const element = actions[index];
 				if (element['action'] &&
 					element['action']['type'] ==='SendMessage' &&  
-					element['action']['settings']['type'] != "application/vnd.lime.chatstate+json" &&  
-					element['action']['settings']['content']  && 
+					element['action']['settings']['type'] === "text/plain" &&  
 					element['action']['settings']['content']) {
 						if(IsJsonString(element['action']['settings']['content']))
 							botmessages += element['action']['settings']['content']['text']+'\n '
@@ -108,12 +107,29 @@ exports.addchatbaseintegration = (function () {
 					element['action']['settings']['type'] ==='application/vnd.lime.collection+json' &&  
 					element['action']['settings']['content'] ) {
 						var items = element['action']['settings']['content']['items']
-						if(items)	
+						if(items){
 							botmessages += 'Carroussel \n '
-						for (let index = 0; index < items.length; index++) {
-							const item = items[index];	
-							if(item['header'] && item['header']['value'])				
-							botmessages += item['header']['value']['title'] +":"+ item['header']['value']['text']+' | '
+							for (let index = 0; index < items.length; index++) {
+								const item = items[index];	
+								if(item['header'] && item['header']['value'])				
+								botmessages += item['header']['value']['title'] +":"+ item['header']['value']['text']+' | '
+							}
+						}
+				}
+				else if (element['action'] &&
+					element['action']['type'] === 'SendMessage' &&
+					element['action']['settings']['type'] === 'application/vnd.lime.select+json' &&
+					element['action']['settings']['content'] &&
+					element['action']['settings']['content']['text']){
+						var options = element['action']['settings']['content']['options'];
+						if(options){
+							botmessages += 'Menu: ' + element['action']['settings']['content']['text'] + ' \n '
+							for(let index = 0; index < options.length; index++){
+								const option = options[index];
+								if(option['text'])
+								botmessages += option['text'] + ' | '
+							}
+
 						}
 				}
 			}
@@ -136,7 +152,7 @@ exports.addchatbaseintegration = (function () {
 				if (checkuserinteraction.checkuserinteraction(blipblock)) {
 					var intent =  blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
 					intent = intent.split(" ").join('-')
-					blipblock = userinteractionPost(blipblock,intent)
+					blipblock = userinteractionPost(blipblock,intent,platform)
 					blipblock['$tags'].push(chatbaseUser)
 				}
               
