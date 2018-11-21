@@ -98,9 +98,9 @@ exports.addchatbaseintegration = (function () {
 					element['action']['settings']['type'] === "text/plain" &&  
 					element['action']['settings']['content']) {
 						if(IsJsonString(element['action']['settings']['content']))
-							botmessages += element['action']['settings']['content']['text']+'\n '
+							botmessages += element['action']['settings']['content']['text']+' || '
 						else
-							botmessages += element['action']['settings']['content']+'\n '
+							botmessages += element['action']['settings']['content']+' || '
 				}
 				else if (element['action'] &&
 					element['action']['type'] ==='SendMessage' &&  
@@ -108,11 +108,11 @@ exports.addchatbaseintegration = (function () {
 					element['action']['settings']['content'] ) {
 						var items = element['action']['settings']['content']['items']
 						if(items){
-							botmessages += 'Carroussel \n '
+							botmessages += 'Carroussel || '
 							for (let index = 0; index < items.length; index++) {
 								const item = items[index];	
 								if(item['header'] && item['header']['value'])				
-								botmessages += item['header']['value']['title'] +":"+ item['header']['value']['text']+' | '
+								botmessages += item['header']['value']['title'] +": "+ item['header']['value']['text']+' | '
 							}
 						}
 				}
@@ -123,7 +123,7 @@ exports.addchatbaseintegration = (function () {
 					element['action']['settings']['content']['text']){
 						var options = element['action']['settings']['content']['options'];
 						if(options){
-							botmessages += 'Menu: ' + element['action']['settings']['content']['text'] + ' \n '
+							botmessages += 'Menu: ' + element['action']['settings']['content']['text'] + ' || '
 							for(let index = 0; index < options.length; index++){
 								const option = options[index];
 								if(option['text'])
@@ -134,7 +134,7 @@ exports.addchatbaseintegration = (function () {
 				}
 			}
 		}
-		return botmessages
+		return botmessages.replace(/\n|\r/g, " ");
 	}
 	
 	return function (blipJson,platform) {
