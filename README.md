@@ -240,12 +240,6 @@ Saves in "/output/ProcessedwithChatbase.json"
     node addchatbaseintegrationscripts.js test.json
 ```
 
-For Facebook bot:
-
-```   
-    npm install
-    node addchatbaseintegrationscripts.js test.json --platform="Facebook"
-```
 
 # Clearbotscript
 Clear all the input, output actions and tags from all blocks.
