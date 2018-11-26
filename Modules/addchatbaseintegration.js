@@ -31,19 +31,19 @@ exports.addchatbaseintegration = (function () {
         //enteringCustomActions
         previousSaved['enteringCustomActions'] = []
         selectedCard['$enteringCustomActions'].forEach(function (action) {
-            if (action['$title'].toLowerCase() == 'Requisição HTTP - ChatBase Integration User'.toLowerCase())
+            if (action['$title'] && action['$title'].toLowerCase() == 'Requisição HTTP - ChatBase Integration User'.toLowerCase())
                 return
-            if (action['$title'].toLowerCase() == 'Executar script - GetTime Chatbase'.toLowerCase())
+            if (action['$title'] && action['$title'].toLowerCase() == 'Executar script - GetTime Chatbase'.toLowerCase())
                 return    
             previousSaved['enteringCustomActions'].push(action)
         })
         //leavingCustomActions
         previousSaved['leavingCustomActions'] = []
         selectedCard['$leavingCustomActions'].forEach(function (action) {
-            if (action['$title'].toLowerCase() == 'Executar script - GetTime Chatbase'.toLowerCase())
+            if (action['$title'] && action['$title'].toLowerCase() == 'Executar script - GetTime Chatbase'.toLowerCase())
                 return
     
-            if (action['$title'].toLowerCase() == 'Requisição HTTP - ChatBase Integration Bot'.toLowerCase())
+            if (action['$title'] && action['$title'].toLowerCase() == 'Requisição HTTP - ChatBase Integration Bot'.toLowerCase())
                 return
             previousSaved['leavingCustomActions'].push(action)
         })
