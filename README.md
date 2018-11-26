@@ -246,7 +246,7 @@ For Facebook bot:
 ```
 
 # Clearbotscript
-Clear all the input, output and actions from all blocks.
+Clear all the input, output actions and tags from all blocks.
 
 ## Requirements
 Node.JS installed
