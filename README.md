@@ -214,7 +214,7 @@ Saves in "/output/ProcessedFileWithLaststatecript.json"
 ```
 
 # Addchatbaseintegrationscripts
- Add scripts required to integrate manually with chatnase. This scripts will be added on everyblock that has user interaction and or bot interaction and will send it tochatbase using post. The platform is set on the command line --platform="Facebook", the default platform is "Blip chat".
+ Add scripts required to integrate manually with chatnase. This scripts will be added on everyblock that has user interaction and or bot interaction and will send it to chatbase using post. 
 
 ## Requirements
 Node.JS installed
@@ -222,6 +222,8 @@ Bot Variables:
 - {{config.chatbaseURL}}: URL to send thepost
 - {{config.chatbasekey}}: The chatbase key
 - {{config.version}}: Bot Version
+- {{config.chatbasetrack}}: Chatbase track URL ("https://chatbase.com/r?")
+- {{config.platform}}: Plataform on which the bot will run
 
 ## Usage
 Saves in "/output/ProcessedwithChatbase.json"
