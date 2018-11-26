@@ -87,6 +87,38 @@ exports.addchatbaseintegration = (function () {
         return selectedCard
 	}
 
+	function TrackLinks(searchObject) {
+		var actions = searchObject['$contentActions']
+		if (actions) {
+			for (let index = 0; index < actions.length; index++) {
+				const element = actions[index];
+				if (element['action'] &&
+					element['action']['type'] ==='SendMessage' &&  
+					element['action']['settings']['type'] ==='application/vnd.lime.collection+json' &&  
+					element['action']['settings']['content'] ) {
+						var items = element['action']['settings']['content']['items']
+						if(items){
+							for (let index = 0; index < items.length; index++) {
+								const item = items[index];	
+								if(item['options']){
+									for (let index1 = 0; index1 < item['options'].length; index1++) {
+										var option = item['options'][index1]
+										if (option['label'] && option['label']['value'] &&
+										option['label']['type'] ==='application/vnd.lime.web-link+json' && option['label']['value']['uri']){
+											if(option['label']['value']['uri'].search("https://chatbase.com/r?")===-1){
+												option['label']['value']['uri'] = "{{config.chatbasetrack}}api_key={{config.chatbaseKey}}&platform={{config.platform}}&version={{config.version}}&url="+option['label']['value']['uri']
+											}
+										}
+									}								
+								}
+							}
+						}
+				}
+			}
+		}
+		return searchObject
+	}
+
 	function GetBotNessages(searchObject) {
 		var botmessages = ""
 		var actions = searchObject['$contentActions']
@@ -148,7 +180,7 @@ exports.addchatbaseintegration = (function () {
                 blipblock['$leavingCustomActions'] = []
 				blipblock['$enteringCustomActions'] = []
 				blipblock['$tags'] = []
-
+				blipblock = TrackLinks(blipblock)
 				if (checkuserinteraction.checkuserinteraction(blipblock)) {
 					var intent =  blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
 					intent = intent.split(" ").join('-')
