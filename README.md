@@ -29,6 +29,10 @@
   * [Requirements](#requirements-6)
   * [Usage](#usage-6)
     + [Examples](#examples-6)
+- [Clearbotscript](#clearbotscript)
+  * [Requirements](#requirements-7)
+  * [Usage](#usage-7)
+    + [Examples](#examples-7)
 
 # Regexifybot
 Turns all the conditions to from a specific bot that check the user input into regex expressions. Can also be used to turn a sigle expression on a regex for blip
@@ -239,4 +243,25 @@ For Facebook bot:
 ```   
     npm install
     node addchatbaseintegrationscripts.js test.json --platform="Facebook"
+```
+
+# Clearbotscript
+Clear all the input, output and actions from all blocks.
+
+## Requirements
+Node.JS installed
+
+## Usage
+Saves in "/output/ClearedFile.json"
+
+```
+    npm install
+    node clearbotscript.js <inputJson>
+```
+
+### Examples
+
+```
+    npm install
+    node clearbotscript.js test.json
 ```
