@@ -24,5 +24,18 @@
         "inputVariables": [],
         "outputVariable": "lastUserInteraction"
       }
-    }
+    },
+    {
+      "type": "ExecuteScript",
+      "$title": "Executar script - Last User Message",
+      "$invalid": false,
+      "settings": {
+          "function": "run",
+          "source": "\nfunction run(lastUserMessage) {\n    return lastUserMessage;\n}",
+          "inputVariables": [
+              "input.content"
+          ],
+          "outputVariable": "lastUserMessage"
+      }
+    } 
   ]
