@@ -13,7 +13,10 @@ exports.addsessionidscript = (function () {
 		//leavingCustomActions
 		previousSaved['leavingCustomActions'] = []
 		selectedCard['$leavingCustomActions'].forEach(function (action) {
-			if (action['$title'] === 'Executar script - lastUserInteraction' || action['$title'] === 'Executar script - sessionId'|| action['$title'] === 'Executar script - Last User Message')
+			if (action['$title'] === 'Executar script - lastUserInteraction' || 
+			action['$title'] === 'Executar script - sessionId'|| 
+			action['$title'] === 'Executar script - Last User Message'|| 
+			action['$title'] === 'Executar script - Update ChatBaseKey')
 				return
 			previousSaved['leavingCustomActions'].push(action)
         })

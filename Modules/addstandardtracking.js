@@ -152,7 +152,8 @@ exports.addstandardtrackingscript = (function () {
     }
 
 	return function (blipJson,addtoall) {
-
+        var checkuserinteraction = require ('./checkuserinteraction')
+		var checkbotinteraction = require ('./checkbotinteraction')
 		try {
             var enteringTrackingEvents = JSON.parse(fs.readFileSync('./resources/enteringTrackingEvents.json', 'utf8'))
 
@@ -168,7 +169,7 @@ exports.addstandardtrackingscript = (function () {
                         name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()
                     }
                 }
-                if (blipblock['$title'].search('\\[') != -1 || addtoall) {
+                if (checkuserinteraction.checkuserinteraction(blipblock) || checkbotinteraction.checkbotinteraction(blipblock)) {
                     var previousSaved = savePreviousActions(blipblock, name)
                     blipblock['$enteringCustomActions'] = []
                     blipblock['$tags'] = []
@@ -179,7 +180,7 @@ exports.addstandardtrackingscript = (function () {
                     if (possibleAnswers.length > 0) { //add only to interaction blocks    
                         blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
                     }
-                    if (blipblock['$title'].search('\\[E') == -1 || addtoall)
+                    if (checkbotinteraction.checkbotinteraction(blipblock))
                         blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
                     blipblock = addPreviousScripts(blipblock, previousSaved)
                 }
