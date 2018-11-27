@@ -128,7 +128,7 @@ Append extras of all events in the test.json with the content of "/resources/ext
 ```
 
 # Addstandardtrackingscripts
-Add standard Trackings to all block that have the "[]" marking in the name. If you add the flag "--all" at the end will append to all blocks in the builder
+Add standard Trackings to all block that have the bot interaction or wait user message. If you add the flag "--all" at the end will append to all blocks in the builder
 
 ## Requirements
 Node.JS installed
