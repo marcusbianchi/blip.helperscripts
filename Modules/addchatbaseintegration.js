@@ -105,7 +105,7 @@ exports.addchatbaseintegration = (function () {
 										var option = item['options'][index1]
 										if (option['label'] && option['label']['value'] &&
 										option['label']['type'] ==='application/vnd.lime.web-link+json' && option['label']['value']['uri']){
-											if(option['label']['value']['uri'].search("https://chatbase.com/r?")===-1){
+											if(option['label']['value']['uri'].search("chatbasetrack")===-1){
 												option['label']['value']['uri'] = "{{config.chatbasetrack}}api_key={{config.chatbaseKey}}&platform={{config.platform}}&version={{config.version}}&url="+option['label']['value']['uri']
 											}
 										}
