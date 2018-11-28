@@ -13,20 +13,22 @@ exports.addsessionidscript = (function () {
 		//leavingCustomActions
 		previousSaved['leavingCustomActions'] = []
 		selectedCard['$leavingCustomActions'].forEach(function (action) {
-			if (action['$title'] === 'Executar script - lastUserInteraction' || 
-			action['$title'] === 'Executar script - sessionId'|| 
-			action['$title'] === 'Executar script - Last User Message'|| 
-			action['$title'] === 'Executar script - Update ChatBaseKey')
+			if (action['$title'] === 'Executar script - lastUserInteraction' ||
+				action['$title'] === 'Executar script - sessionId' ||
+				action['$title'] === 'Executar script - Last User Message' ||
+				action['$title'] === 'Executar script - Update ChatBaseKey')
 				return
 			previousSaved['leavingCustomActions'].push(action)
-        })
-        //tags
-        previousSaved['tags'] = []
-        selectedCard['$tags'].forEach(function (tag) {
-            if (tag['label'] == 'SessionControlPoint')
-                return
-            previousSaved['tags'].push(tag)
-        })
+		})
+		//tags
+		previousSaved['tags'] = []
+		if (selectedCard['$tags']) {
+			selectedCard['$tags'].forEach(function (tag) {
+				if (tag['label'] == 'SessionControlPoint')
+					return
+				previousSaved['tags'].push(tag)
+			})
+		}
 		return previousSaved
 	}
 
@@ -34,10 +36,10 @@ exports.addsessionidscript = (function () {
 	function addPreviousScripts(selectedCard, previousSaved) {
 		previousSaved['leavingCustomActions'].forEach(function (action) {
 			selectedCard['$leavingCustomActions'].push(action)
-        })
-        previousSaved['tags'].forEach(function (tag) {
-            selectedCard['$tags'].push(tag)
-        })
+		})
+		previousSaved['tags'].forEach(function (tag) {
+			selectedCard['$tags'].push(tag)
+		})
 		return selectedCard
 	}
 
@@ -50,23 +52,30 @@ exports.addsessionidscript = (function () {
 	}
 
 
-
 	return function (blipJson) {
-        var checkuserinteraction = require ('./checkuserinteraction')
+		var checkuserinteraction = require('./checkuserinteraction')
 
 		try {
-            var sessionscripts = JSON.parse(fs.readFileSync('./resources/sessionscripts.json', 'utf8'))
+			var sessionscripts = JSON.parse(fs.readFileSync('./resources/sessionscripts.json', 'utf8'))
 			Object.keys(blipJson).forEach(function (k) {
 				var blipblock = blipJson[k]
-				if (checkuserinteraction.checkuserinteraction(blipblock)) {
-					var previousSaved = savePreviousActions(blipblock)
-                    blipblock['$leavingCustomActions'] = []
-                    blipblock['$tags'] = []
-					AddScripts(blipblock, sessionscripts)
-					blipblock['$tags'].push(tagSessionControl)
-					blipblock = addPreviousScripts(blipblock, previousSaved)
+
+				if (k.search("desk") == -1) {
+					if (checkuserinteraction.checkuserinteraction(blipblock)) {
+						var previousSaved = savePreviousActions(blipblock)
+						blipblock['$leavingCustomActions'] = []
+						blipblock['$tags'] = []
+						AddScripts(blipblock, sessionscripts)
+						blipblock['$tags'].push(tagSessionControl)
+						blipblock = addPreviousScripts(blipblock, previousSaved)
+					}
+				} else {
+					blipblock['$leavingCustomActions'] = []
+					blipblock['$enteringCustomActions'] = []
+					blipblock['$tags'] = []
 				}
 			})
+
 			fs.writeFileSync('./output/ProcessedFileWithId.json', JSON.stringify(blipJson), {
 				encoding: 'utf8',
 				flag: 'w+'
