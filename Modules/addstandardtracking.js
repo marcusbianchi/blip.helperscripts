@@ -76,11 +76,12 @@ exports.addstandardtrackingscript = (function () {
 		//enteringCustomActions
 		previousSaved['enteringCustomActions'] = []
 		selectedCard['$enteringCustomActions'].forEach(function (action) {
-			if (action['$title'].toLowerCase() == 'Registro de eventos - Last State'.toLowerCase())
-				return
-			if (action['$title'].toLowerCase() == 'Registro de eventos - Exibicao'.toLowerCase())
-				return
-
+			if(action['$title']){
+				if (action['$title'].toLowerCase() == 'Registro de eventos - Last State'.toLowerCase())
+					return
+				if (action['$title'].toLowerCase() == 'Registro de eventos - Exibicao'.toLowerCase())
+					return
+			}
 			previousSaved['enteringCustomActions'].push(action)
 		})
 		//leavingCustomActions
@@ -151,7 +152,8 @@ exports.addstandardtrackingscript = (function () {
 	}
 
 	return function (blipJson, addtoall) {
-
+		var checkuserinteraction = require('./checkuserinteraction')
+		var checkbotinteraction = require('./checkbotinteraction')
 		try {
 			var enteringTrackingEvents = JSON.parse(fs.readFileSync('./resources/enteringTrackingEvents.json', 'utf8'))
 
