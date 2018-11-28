@@ -58,21 +58,14 @@ exports.addsessionidscript = (function () {
 		try {
 			var sessionscripts = JSON.parse(fs.readFileSync('./resources/sessionscripts.json', 'utf8'))
 			Object.keys(blipJson).forEach(function (k) {
-				var blipblock = blipJson[k]
-
-				if (k.search("desk") == -1) {
-					if (checkuserinteraction.checkuserinteraction(blipblock)) {
-						var previousSaved = savePreviousActions(blipblock)
-						blipblock['$leavingCustomActions'] = []
-						blipblock['$tags'] = []
-						AddScripts(blipblock, sessionscripts)
-						blipblock['$tags'].push(tagSessionControl)
-						blipblock = addPreviousScripts(blipblock, previousSaved)
-					}
-				} else {
+				var blipblock = blipJson[k]		
+				if (checkuserinteraction.checkuserinteraction(blipblock)) {
+					var previousSaved = savePreviousActions(blipblock)
 					blipblock['$leavingCustomActions'] = []
-					blipblock['$enteringCustomActions'] = []
 					blipblock['$tags'] = []
+					AddScripts(blipblock, sessionscripts)
+					blipblock['$tags'].push(tagSessionControl)
+					blipblock = addPreviousScripts(blipblock, previousSaved)
 				}
 			})
 

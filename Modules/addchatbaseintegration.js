@@ -173,32 +173,32 @@ exports.addchatbaseintegration = (function () {
 		var checkbotinteraction = require('./checkbotinteraction')
 		try {
 			Object.keys(blipJson).forEach(function (k) {
-				var blipblock = blipJson[k]
+			var blipblock = blipJson[k]
 
-				var previousSaved = savePreviousActions(blipblock)
-				blipblock['$leavingCustomActions'] = []
-				blipblock['$enteringCustomActions'] = []
-				blipblock['$tags'] = []
-				if (k.search("desk") == -1) {
-					blipblock = TrackLinks(blipblock)
-					if (checkuserinteraction.checkuserinteraction(blipblock)) {
-						var intent = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
-						intent = intent.split(" ").join('-')
-						blipblock = userinteractionPost(blipblock, intent, platform)
-						blipblock['$tags'].push(chatbaseUser)
-					}
-
-					if (checkbotinteraction.checkbotinteraction(blipblock)) {
-						botmessages = GetBotNessages(blipblock)
-						blipblock = botinteractionPost(blipblock, botmessages, platform)
-						blipblock['$tags'].push(chatbaseBot)
-					}
-
-
-					blipblock = addPreviousScripts(blipblock, previousSaved)
+			var previousSaved = savePreviousActions(blipblock)
+			blipblock['$leavingCustomActions'] = []
+			blipblock['$enteringCustomActions'] = []
+			blipblock['$tags'] = []
+			
+				blipblock = TrackLinks(blipblock)
+				if (checkuserinteraction.checkuserinteraction(blipblock)) {
+					var intent = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
+					intent = intent.split(" ").join('-')
+					blipblock = userinteractionPost(blipblock, intent, platform)
+					blipblock['$tags'].push(chatbaseUser)
 				}
 
-			})
+				if (checkbotinteraction.checkbotinteraction(blipblock)) {
+					botmessages = GetBotNessages(blipblock)
+					blipblock = botinteractionPost(blipblock, botmessages, platform)
+					blipblock['$tags'].push(chatbaseBot)
+				}
+
+
+				blipblock = addPreviousScripts(blipblock, previousSaved)
+			}
+
+			)
 			fs.writeFileSync('./output/ProcessedwithChatbase.json', JSON.stringify(blipJson), {
 				encoding: 'utf8',
 				flag: 'w+'

@@ -157,40 +157,31 @@ exports.addstandardtrackingscript = (function () {
 
 			Object.keys(blipJson).forEach(function (k) {
 					var blipblock = blipJson[k]
-					if (k.search("desk") == -1) {
-
-						var name = ""
-						if (!addtoall)
-							name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
-						else {
-							if (blipblock['$title'].search('\\]') == -1) {
-								name = blipblock['$title'].toLowerCase()
-							} else {
-								name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()
-							}
+					var name = ""
+					if (!addtoall)
+						name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
+					else {
+						if (blipblock['$title'].search('\\]') == -1) {
+							name = blipblock['$title'].toLowerCase()
+						} else {
+							name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()
 						}
-						if (blipblock['$title'].search('\\[') != -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock) || checkbotinteraction.checkbotinteraction(blipblock)) {
-							var previousSaved = savePreviousActions(blipblock, name)
-							blipblock['$enteringCustomActions'] = []
-							blipblock['$tags'] = []
-							blipblock['$leavingCustomActions'] = []
-							blipblock = AddInputScripts(blipblock, enteringTrackingEvents, name, k, tagInputScripts)
-							var possibleAnswers = searchUserInput(blipblock)
-
-							if (possibleAnswers.length > 0) { //add only to interaction blocks    
-								blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
-							}
-							if (blipblock['$title'].search('\\[E') == -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock))
-								blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
-							blipblock = addPreviousScripts(blipblock, previousSaved)
-						}
-
-
-					} else {
-						blipblock['$leavingCustomActions'] = []
+					}
+					if (blipblock['$title'].search('\\[') != -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock) || checkbotinteraction.checkbotinteraction(blipblock)) {
+						var previousSaved = savePreviousActions(blipblock, name)
 						blipblock['$enteringCustomActions'] = []
 						blipblock['$tags'] = []
-					}
+						blipblock['$leavingCustomActions'] = []
+						blipblock = AddInputScripts(blipblock, enteringTrackingEvents, name, k, tagInputScripts)
+						var possibleAnswers = searchUserInput(blipblock)
+
+						if (possibleAnswers.length > 0) { //add only to interaction blocks    
+							blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
+						}
+						if (blipblock['$title'].search('\\[E') == -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock))
+							blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+						blipblock = addPreviousScripts(blipblock, previousSaved)
+					}					
 				}
 
 			)
