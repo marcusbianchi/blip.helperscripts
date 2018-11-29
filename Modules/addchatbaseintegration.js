@@ -106,8 +106,13 @@ exports.addchatbaseintegration = (function () {
 									var option = item['options'][index1]
 									if (option['label'] && option['label']['value'] &&
 										option['label']['type'] === 'application/vnd.lime.web-link+json' && option['label']['value']['uri']) {
-										if (option['label']['value']['uri'].search("chatbasetrack") === -1) {
+										if (option['label']['value']['uri'].search("{{config.chatbasetrack}}") === -1) {
+											console.log(option['label']['value']['uri'])
 											option['label']['value']['uri'] = "{{config.chatbasetrack}}api_key={{config.chatbaseKey}}&platform={{config.platform}}&version={{config.version}}&url=" + option['label']['value']['uri']
+										}
+										else{
+											url = option['label']['value']['uri'].substring(option['label']['value']['uri'].search("http"))
+											option['label']['value']['uri'] = "{{config.chatbasetrack}}api_key={{config.chatbaseKey}}&platform={{config.platform}}&version={{config.version}}&url=" +url
 										}
 									}
 								}

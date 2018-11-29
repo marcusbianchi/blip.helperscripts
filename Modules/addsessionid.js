@@ -54,7 +54,7 @@ exports.addsessionidscript = (function () {
 
 	return function (blipJson) {
 		var checkuserinteraction = require('./checkuserinteraction')
-		var checkbotinteraction = require('./checkbotinteraction')
+
 		try {
 			var sessionscripts = JSON.parse(fs.readFileSync('./resources/sessionscripts.json', 'utf8'))
 			Object.keys(blipJson).forEach(function (k) {
