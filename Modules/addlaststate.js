@@ -1,5 +1,7 @@
 exports.addlaststatescript = (function () {
     var fs = require('fs')
+    var checkuserinteraction = require('./checkuserinteraction')
+    var checkbotinteraction = require('./checkbotinteraction')
 
     var taglastStateUpdateEventScript = {}
     taglastStateUpdateEventScript['background'] = "#1FE5BD"
@@ -14,26 +16,34 @@ exports.addlaststatescript = (function () {
         selectedCard['$tags'].push(taglastStateUpdateEventScript)
         return selectedCard
     }
-    
-	return function (blipJson) {
 
+    function HasBotOrUserInteraction (blipBlock) {
+        return checkuserinteraction.checkuserinteraction(blipBlock) || checkbotinteraction.checkbotinteraction(blipBlock);
+    }
+    
+	return function (blipJson, addToAll, addJustUserInteraction) {
 
 			try {
+                
                 Object.keys(blipJson).forEach(function(k) {
                     var blipblock = blipJson[k]
-                    var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()           
-                    if (blipblock['$title'].search('\\[') != -1) {                
-                        if (blipblock['$title'].search('\\[E') == -1)
-                            blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+                    var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
+                    if (addToAll && !addJustUserInteraction) {
+                        blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+                    } else if (addToAll && addJustUserInteraction && HasBotOrUserInteraction(blipblock))  {
+                        blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+                    } else if (blipblock['$title'].search('\\[') != -1 && blipblock['$title'].search('\\[E') == -1) {
+                        blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
                     }
-        
                 })
+
                 blipJson["onboarding"] = UpdateLastStateEvent(blipJson["onboarding"], taglastStateUpdateEventScript, "onboarding")
         
                 fs.writeFileSync('./output/ProcessedFileWithLaststatecript.json', JSON.stringify(blipJson), {
                     encoding: 'utf8',
                     flag: 'w+'
                 })
+
 			} catch (error) {
 				console.log(error)
 			}
