@@ -193,7 +193,7 @@ Saves in "/output/ProcessedFileWithId.json"
 ```
 
 # Addlaststatescript
- Append laststateUpdate script in all the block that has a "[]" on the name.
+ Append laststateUpdate script in all the block that has a "[]" on the name, except blocks starting with "[E...]". If you add the flag "--all" at the second argument it will append the script to all blocks in the builder, and if you add the flag "--all" and "--userInteraction" it will append to all blocks in the builder that wait for some user interaction.
 
 ## Requirements
 Node.JS installed
