@@ -204,10 +204,9 @@ exports.addchatbaseintegration = (function () {
 			}
 
 			)
-			fs.writeFileSync('./output/ProcessedwithChatbase.json', JSON.stringify(blipJson), {
-				encoding: 'utf8',
-				flag: 'w+'
-			})
+			
+			return blipJson;
+
 		} catch (error) {
 			console.log(error)
 		}

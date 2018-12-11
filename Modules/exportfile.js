@@ -3,7 +3,6 @@ exports.savefile = (function () {
 
     return function (blipJson) {
         try {
-            console.log('entrou aqui');
             fs.writeFileSync('./output/flow.json', JSON.stringify(blipJson), {
                 encoding: 'utf8',
                 flag: 'w+'

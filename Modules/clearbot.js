@@ -11,10 +11,8 @@ exports.clearbot = (function () {
 					blipblock['$tags'] = []
 
 				})
-				fs.writeFileSync('./output/ClearedFile.json', JSON.stringify(blipJson), {
-					encoding: 'utf8',
-					flag: 'w+'
-				})
+
+				return blipJson
 			} catch (error) {
 				console.log(error)
 			}

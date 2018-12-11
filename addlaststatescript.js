@@ -21,9 +21,9 @@ var addlaststatescript = function() {
             return null
         }
         var addlaststate = require ('./Modules/addlaststate')
-        var finalFlow = addlaststate.addlaststatescript(blipJson, addToAll, addJustUserInteraction);
+        var flow = addlaststate.addlaststatescript(blipJson, addToAll, addJustUserInteraction)
         
-        exportfile.savefile(finalFlow);
+        exportfile.savefile(flow)
 
         
     } catch (error) {

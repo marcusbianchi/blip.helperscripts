@@ -195,10 +195,9 @@ exports.addstandardtrackingscript = (function () {
 				blipJson["onboarding"] = UpdateLastStateEvent(blipJson["onboarding"], taglastStateUpdateEventScript, "onboarding")
 				blipJson["onboarding"] = addPreviousScripts(blipJson["onboarding"], previousSaved)
 			}
-			fs.writeFileSync('./output/ProcessedFileWithTrackingScripts.json', JSON.stringify(blipJson), {
-				encoding: 'utf8',
-				flag: 'w+'
-			})
+
+			return blipJson;
+		
 		} catch (error) {
 			console.log(error)
 		}

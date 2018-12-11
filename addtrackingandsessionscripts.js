@@ -5,6 +5,7 @@ var addtrackingandsession = function () {
 	try {
 		var jsonPath = process.argv[2]
 		var argv = require('minimist')(process.argv.slice(3));
+		var exportfile = require('./Modules/exportfile')
 
 		var addtoall = false
 		if (argv['all']) {
@@ -23,10 +24,11 @@ var addtrackingandsession = function () {
 			return
 		}
 		var addstandardtracking = require ('./Modules/addstandardtracking')
-        addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
-        blipJson = JSON.parse(fs.readFileSync('./output/ProcessedFileWithTrackingScripts.json'))
+        var blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
         var sessionId = require ('./Modules/addsessionid')
-        sessionId.addsessionidscript(blipJson)
+		var flow = sessionId.addsessionidscript(blipJson)
+		
+		exportfile.savefile(flow)
 
 	} catch (error) {
 		console.log(error)
