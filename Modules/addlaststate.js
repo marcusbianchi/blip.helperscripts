@@ -23,30 +23,27 @@ exports.addlaststatescript = (function () {
     
 	return function (blipJson, addToAll, addJustUserInteraction) {
 
-			try {
-                
-                Object.keys(blipJson).forEach(function(k) {
-                    var blipblock = blipJson[k]
-                    var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
-                    if (addToAll && !addJustUserInteraction) {
-                        blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
-                    } else if (addToAll && addJustUserInteraction && HasBotOrUserInteraction(blipblock))  {
-                        blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
-                    } else if (blipblock['$title'].search('\\[') != -1 && blipblock['$title'].search('\\[E') == -1) {
-                        blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
-                    }
-                })
+        try {
+            
+            Object.keys(blipJson).forEach(function(k) {
+                var blipblock = blipJson[k]
+                var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
+                if (addToAll && !addJustUserInteraction) {
+                    blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+                } else if (addToAll && addJustUserInteraction && HasBotOrUserInteraction(blipblock))  {
+                    blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+                } else if (blipblock['$title'].search('\\[') != -1 && blipblock['$title'].search('\\[E') == -1) {
+                    blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+                }
+            })
 
-                blipJson["onboarding"] = UpdateLastStateEvent(blipJson["onboarding"], taglastStateUpdateEventScript, "onboarding")
-        
-                fs.writeFileSync('./output/ProcessedFileWithLaststatecript.json', JSON.stringify(blipJson), {
-                    encoding: 'utf8',
-                    flag: 'w+'
-                })
+            blipJson["onboarding"] = UpdateLastStateEvent(blipJson["onboarding"], taglastStateUpdateEventScript, "onboarding")
+    
+            return blipJson;
 
-			} catch (error) {
-				console.log(error)
-			}
-		}
+        } catch (error) {
+            console.log(error)
+        }
+    }
 	
 })()

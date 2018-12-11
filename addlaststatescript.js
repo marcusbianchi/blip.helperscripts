@@ -1,9 +1,11 @@
 
 var addlaststatescript = function() {
 
+
     try {
         var blipJson = {}
         var fs = require('fs')
+        var exportfile = require('./Modules/exportfile')
         var jsonPath = process.argv[2]
         var addToAll = process.argv[3]
         var addJustUserInteraction = process.argv[4]
@@ -19,7 +21,10 @@ var addlaststatescript = function() {
             return null
         }
         var addlaststate = require ('./Modules/addlaststate')
-        addlaststate.addlaststatescript(blipJson, addToAll, addJustUserInteraction)
+        var finalFlow = addlaststate.addlaststatescript(blipJson, addToAll, addJustUserInteraction);
+        
+        exportfile.savefile(finalFlow);
+
         
     } catch (error) {
         console.log(error)
