@@ -4,6 +4,8 @@ var regexifybot = function () {
     var jsonPath = process.argv[2]
     var regexify = require ('./Modules/regexify')
     var argv = require('minimist')(process.argv);
+    var exportfile = require('./Modules/exportfile')
+
 		if (argv['value']) {
       var result = regexify.regexify.regexifyvalue(argv['value'])
       console.log(result)
@@ -18,7 +20,9 @@ var regexifybot = function () {
       console.log(error)
     }
 
-    regexify.regexify.regexifyall(blipJson)
+    var flow = regexify.regexify.regexifyall(blipJson)
+
+    exportfile.savefile(flow)
    
 }
 
