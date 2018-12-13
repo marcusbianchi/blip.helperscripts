@@ -69,10 +69,8 @@ exports.addsessionidscript = (function () {
 				}
 			})
 
-			fs.writeFileSync('./output/ProcessedFileWithId.json', JSON.stringify(blipJson), {
-				encoding: 'utf8',
-				flag: 'w+'
-			})
+			return blipJson;
+			
 		} catch (error) {
 			console.log(error)
 		}

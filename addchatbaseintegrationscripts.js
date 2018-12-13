@@ -1,6 +1,7 @@
 var addchatbaseintegrationscripts = function () {
 
     var fs = require('fs')
+    var exportfile = require('./Modules/exportfile');
     var jsonPath = process.argv[2]
 		var argv = require('minimist')(process.argv.slice(3));
 
@@ -18,7 +19,9 @@ var addchatbaseintegrationscripts = function () {
     }
 
     var addchatbaseintegration = require ('./Modules/addchatbaseintegration')
-    addchatbaseintegration.addchatbaseintegration(blipJson,platform)
+    var flow = addchatbaseintegration.addchatbaseintegration(blipJson, platform);
+
+    exportfile.savefile(flow);
    
 }
 

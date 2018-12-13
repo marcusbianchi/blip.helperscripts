@@ -2,6 +2,7 @@ var addsessionidscript = function () {
 
   try {
     var fs = require('fs')
+    var exportfile = require('./Modules/exportfile')
     var jsonPath = process.argv[2]
     var blipJson = {}
 
@@ -16,7 +17,10 @@ var addsessionidscript = function () {
       return null
     }
     var sessionId = require ('./Modules/addsessionid')
-    sessionId.addsessionidscript(blipJson)
+    var flow = sessionId.addsessionidscript(blipJson)
+    
+    exportfile.savefile(flow)
+
   } catch (error) {
       console.log(error)
   }

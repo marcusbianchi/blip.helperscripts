@@ -1,8 +1,10 @@
 var addextrastoscripts = function () {
 
     var fs = require('fs')
+    var exportfile = require('./Modules/exportfile')
     var jsonPath = process.argv[2]
     var replace = true
+    
     if (process.argv[3] && process.argv[3] === 'a') {
       replace = false
     }
@@ -16,7 +18,9 @@ var addextrastoscripts = function () {
     }
 
     var addextras = require ('./Modules/addextras')
-    addextras.addextrastoscripts(blipJson,replace)
+    let flow = addextras.addextrastoscripts(blipJson,replace)
+
+    exportfile.savefile(flow)
    
 }
 

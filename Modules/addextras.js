@@ -21,10 +21,9 @@ exports.addextrastoscripts = (function () {
 					blipblock['$leavingCustomActions'] = ReplaceExtras(blipblock['$leavingCustomActions'], extrasObj, replace)
 					blipblock['$enteringCustomActions'] = ReplaceExtras(blipblock['$enteringCustomActions'], extrasObj, replace)
 				})
-				fs.writeFileSync('./output/ProcessedFile.json', JSON.stringify(blipJson), {
-					encoding: 'utf8',
-					flag: 'w+'
-				})
+
+				return blipJson;
+				
 			} catch (error) {
 				console.log(error)
 			}

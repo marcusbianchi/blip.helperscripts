@@ -96,14 +96,11 @@ exports.regexify = (function () {
 					var blipblock = blipJson[k]
 					blipblock = RexifyBotoutputs(blipblock)
 				})
-				fs.writeFileSync('./output/ProcessedwithRegex.json', JSON.stringify(blipJson), {
-					encoding: 'utf8',
-					flag: 'w+'
-				})
 				fs.writeFileSync('./output/regex.json', JSON.stringify(Array.from(resultSet)), {
 					encoding: 'utf8',
 					flag: 'w+'
 				})
+				return blipJson
 			} catch (error) {
 				console.log(error)
 			}
