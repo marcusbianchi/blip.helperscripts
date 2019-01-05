@@ -1,11 +1,11 @@
 const getExtrasScripts = () => {
-    return JSON.parse({
+    return {
         "userId": "{{contact.identity}}",
         "originatorMessageId": "{{input.message@id}}",
         "userEmail": "{{contact.email}}",
         "userName": "{{contact.name}}",
         "sessionId": "{{sessionId}}"
-    })
+    }
 }
 
-module.exports.getExtrasScripts
+module.exports.getExtrasScripts = getExtrasScripts

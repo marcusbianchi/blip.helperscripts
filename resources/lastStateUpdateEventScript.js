@@ -1,5 +1,5 @@
 const getLastStateUpdateScript = () => {
-    return JSON.parse({
+    return {
         "type": "ExecuteScript",
         "$title": "Executar script - Update lastState",
         "$invalid": false,
@@ -9,7 +9,7 @@ const getLastStateUpdateScript = () => {
             "inputVariables": [],
             "outputVariable": "lastState"
         }
-    })
+    }
 }
 
-module.exports.getLastStateUpdateScript
+module.exports.getLastStateUpdateScript = getLastStateUpdateScript

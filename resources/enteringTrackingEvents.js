@@ -1,5 +1,5 @@
 const getEnteringTrackingEventsScripts = () => {
-    return JSON.parse([
+    return [
         {
             "type": "TrackEvent",
             "$title": "Registro de eventos - Last State",
@@ -32,7 +32,7 @@ const getEnteringTrackingEventsScripts = () => {
                 "action": "Exibicao"
             }
         }
-    ])
+    ]
 }
 
-module.exports.getEnteringTrackingEventsScripts
+module.exports.getEnteringTrackingEventsScripts = getEnteringTrackingEventsScripts

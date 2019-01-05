@@ -1,6 +1,9 @@
 exports.addstandardtrackingscript = (function () {
 	var fs = require('fs')
-
+	var chooseAnswerEventService = require('./../resources/chooseAnswerEvent')
+	var chooseAnswerScriptService = require('./../resources/chooseAnswerScript')
+	var enteringTrackingEventsService = require('./../resources/enteringTrackingEvents')
+	var lastStateUpdateEventScriptService = require('./../resources/lastStateUpdateEventScript')
 
 	var tagChooseAnswer = {}
 	tagChooseAnswer['background'] = "#FFBC00"
@@ -23,7 +26,7 @@ exports.addstandardtrackingscript = (function () {
 
 	function UpdateLastStateEvent(selectedCard, taglastStateUpdateEventScript, blockName) {
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
-		var lastStateUpdateEventScript = JSON.parse(fs.readFileSync('./resources/lastStateUpdateEventScript.json', 'utf8'))
+		var lastStateUpdateEventScript = lastStateUpdateEventScriptService.getLastStateUpdateScript()
 		lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + blockName + "\"");
 		selectedCard['$leavingCustomActions'].push(lastStateUpdateEventScript)
 		selectedCard['$tags'].push(taglastStateUpdateEventScript)
@@ -48,8 +51,8 @@ exports.addstandardtrackingscript = (function () {
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
 
 		var possibleAnswersStr = JSON.stringify(possibleAnswers)
-		var chooseAnswerScript = JSON.parse(fs.readFileSync('./resources/chooseAnswerScript.json', 'utf8'))
-		var chooseAnswerEvent = JSON.parse(fs.readFileSync('./resources/chooseAnswerEvent.json', 'utf8'))
+		var chooseAnswerScript = chooseAnswerScriptService.getChooseAnswerScript()
+		var chooseAnswerEvent = chooseAnswerEventService.chooseAnswerEventScript()
 		chooseAnswerScript['settings']['source'] = chooseAnswerScript['settings']['source'].replace('#cs1#', possibleAnswersStr);
 		chooseAnswerEvent['settings']['category'] = blockName + " - cliques"
 		selectedCard['$leavingCustomActions'] = JSON.parse(JSON.stringify([chooseAnswerScript, chooseAnswerEvent]))
@@ -155,7 +158,7 @@ exports.addstandardtrackingscript = (function () {
 		var checkuserinteraction = require('./checkuserinteraction')
 		var checkbotinteraction = require('./checkbotinteraction')
 		try {
-			var enteringTrackingEvents = JSON.parse(fs.readFileSync('./resources/enteringTrackingEvents.json', 'utf8'))
+			var enteringTrackingEvents = enteringTrackingEventsService.getEnteringTrackingEventsScripts()
 
 			Object.keys(blipJson).forEach(function (k) {
 					var blipblock = blipJson[k]

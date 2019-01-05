@@ -1,6 +1,5 @@
 const getSessionScripts = () => {
-    return JSON.parse(
-        [
+    return [
             {
                 "type": "ExecuteScript",
                 "$title": "Executar script - sessionId",
@@ -53,7 +52,7 @@ const getSessionScripts = () => {
                     "outputVariable": "lastUserMessage"
                 }
             }
-        ])
+        ]
 }
 
-module.exports.getSessionScripts
+module.exports.getSessionScripts = getSessionScripts

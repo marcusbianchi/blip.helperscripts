@@ -1,5 +1,5 @@
 const getTimeScript = () => {
-    return JSON.parse({
+    return {
         "type": "ExecuteScript",
         "$title": "Executar script - GetTime Chatbase",
         "$invalid": false,
@@ -9,7 +9,7 @@ const getTimeScript = () => {
             "inputVariables": [],
             "outputVariable": "currentTime"
         }
-    })
+    }
 }
 
-module.exports.getTimeScript
+module.exports.getTimeScript = getTimeScript

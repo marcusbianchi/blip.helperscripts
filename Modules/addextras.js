@@ -15,7 +15,8 @@ exports.addextrastoscripts = (function () {
 	return function (blipJson,replace) {
 			try {
 				var fs = require('fs')
-				var extrasObj = JSON.parse(fs.readFileSync('./resources/extras.json', 'utf8'))
+				var extrasService = require('./../resources/extras')
+				var extrasObj = extrasService.getExtrasScripts()
 				Object.keys(blipJson).forEach(function (k) {
 					var blipblock = blipJson[k]
 					blipblock['$leavingCustomActions'] = ReplaceExtras(blipblock['$leavingCustomActions'], extrasObj, replace)

@@ -2,6 +2,7 @@ exports.addlaststatescript = (function () {
     var fs = require('fs')
     var checkuserinteraction = require('./checkuserinteraction')
     var checkbotinteraction = require('./checkbotinteraction')
+    var lastStateUpdateEventScriptService = require('./../resources/lastStateUpdateEventScript')
 
     var taglastStateUpdateEventScript = {}
     taglastStateUpdateEventScript['background'] = "#1FE5BD"
@@ -10,7 +11,7 @@ exports.addlaststatescript = (function () {
     taglastStateUpdateEventScript['id'] = "blip-tag-62d0f16e-9923-4f7d-b397-fb22de20d57c";
 
     function UpdateLastStateEvent(selectedCard, taglastStateUpdateEventScript, name) {
-        var lastStateUpdateEventScript = JSON.parse(fs.readFileSync('./resources/lastStateUpdateEventScript.json', 'utf8'))
+        var lastStateUpdateEventScript = lastStateUpdateEventScriptService.getLastStateUpdateScript()
         lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + name.toLowerCase() + "\"");
         selectedCard['$leavingCustomActions'].push(lastStateUpdateEventScript)
         selectedCard['$tags'].push(taglastStateUpdateEventScript)

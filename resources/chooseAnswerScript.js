@@ -1,5 +1,5 @@
 const getChooseAnswerScript = () => {
-    return JSON.parse({
+    return {
         "type": "ExecuteScript",
         "$title": "Executar script - Choose Answer",
         "$invalid": false,
@@ -11,7 +11,7 @@ const getChooseAnswerScript = () => {
             ],
             "outputVariable": "chooseAnswer"
         }
-    })
+    }
 }
 
-module.exports.getChooseAnswerScript
+module.exports.getChooseAnswerScript = getChooseAnswerScript

@@ -1,5 +1,5 @@
 const chooseAnswerEventScript = () => {
-    return JSON.parse({
+    return {
         "type": "TrackEvent",
         "$title": "Registro de eventos - Cliques",
         "$invalid": false,
@@ -14,6 +14,6 @@ const chooseAnswerEventScript = () => {
             "category": "Cartao pre-pago - cliques",
             "action": "{{chooseAnswer}}"
         }
-    })
+    }
 }
-module.exports.chooseAnswerEventScript
+module.exports.chooseAnswerEventScript = chooseAnswerEventScript

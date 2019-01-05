@@ -1,5 +1,8 @@
 exports.addchatbaseintegration = (function () {
 	var fs = require('fs')
+	var chatbaseenteringpostservice = require('./../resources/chatbaseenteringpost')
+	var chatbaseleavingpostservice = require('./../resources/chatbaseleavingpost')
+	var getTimeScriptService = require('./../resources/gettimescript')
 
 	var chatbaseUser = {}
 	chatbaseUser['background'] = "#F87D42"
@@ -69,9 +72,9 @@ exports.addchatbaseintegration = (function () {
 	}
 
 	function userinteractionPost(selectedCard, intent, platform) {
-		var gettimescript = JSON.parse(fs.readFileSync('./resources/gettimescript.json', 'utf8'))
+		var gettimescript = getTimeScriptService.getTimeScript()
 		selectedCard['$enteringCustomActions'].push(gettimescript)
-		var chatbaseenteringpost = JSON.parse(fs.readFileSync('./resources/chatbaseenteringpost.json', 'utf8'))
+		var chatbaseenteringpost = chatbaseenteringpostservice.getChatBaseEnteringPostScript()
 		chatbaseenteringpost['settings']['body'] = chatbaseenteringpost['settings']['body'].replace('#intent#', intent);
 		chatbaseenteringpost['settings']['body'] = chatbaseenteringpost['settings']['body'].replace('#platform#', platform);
 		selectedCard['$enteringCustomActions'].push(chatbaseenteringpost)
@@ -79,9 +82,9 @@ exports.addchatbaseintegration = (function () {
 	}
 
 	function botinteractionPost(selectedCard, botmessage, platform) {
-		var gettimescript = JSON.parse(fs.readFileSync('./resources/gettimescript.json', 'utf8'))
+		var gettimescript = getTimeScriptService.getTimeScript()
 		selectedCard['$leavingCustomActions'].push(gettimescript)
-		var chatbaseleavingpost = JSON.parse(fs.readFileSync('./resources/chatbaseleavingpost.json', 'utf8'))
+		var chatbaseleavingpost = chatbaseleavingpostservice.getChatBaseLeavingPostScript()
 		chatbaseleavingpost['settings']['body'] = chatbaseleavingpost['settings']['body'].replace('#message#', botmessage);
 		chatbaseleavingpost['settings']['body'] = chatbaseleavingpost['settings']['body'].replace('#platform#', platform);
 		selectedCard['$leavingCustomActions'].push(chatbaseleavingpost)
