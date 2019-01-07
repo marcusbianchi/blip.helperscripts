@@ -1,5 +1,6 @@
 exports.addsessionidscript = (function () {
 	var fs = require('fs')
+	var sessionscriptsService = require('./../resources/sessionscripts')
 
 	var tagSessionControl = {}
 	tagSessionControl['background'] = "#26CAEE"
@@ -56,7 +57,7 @@ exports.addsessionidscript = (function () {
 		var checkuserinteraction = require('./checkuserinteraction')
 
 		try {
-			var sessionscripts = JSON.parse(fs.readFileSync('./resources/sessionscripts.json', 'utf8'))
+			var sessionscripts = sessionscriptsService.getSessionScripts()
 			Object.keys(blipJson).forEach(function (k) {
 				var blipblock = blipJson[k]		
 				if (checkuserinteraction.checkuserinteraction(blipblock)) {
