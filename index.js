@@ -62,7 +62,7 @@ const addTrackingAndSession = (blipJson, flag) => {
         addtoall = argv['all']
     }
     let addstandardtracking = require ('./Modules/addstandardtracking')
-    let blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
+    blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
     let sessionId = require ('./Modules/addsessionid')
     let flow = sessionId.addsessionidscript(blipJson)
     return flow
@@ -81,10 +81,10 @@ const addTrackingAndSessionAndChatbase = (blipJson, flag) => {
     }
 
     let addstandardtracking = require ('./Modules/addstandardtracking')
-    let blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
+    blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
 
     let addchatbaseintegration = require ('./Modules/addchatbaseintegration')
-    let blipJson = addchatbaseintegration.addchatbaseintegration(blipJson,platform)	
+    blipJson = addchatbaseintegration.addchatbaseintegration(blipJson,platform)	
     let sessionId = require ('./Modules/addsessionid')
     let flow = sessionId.addsessionidscript(blipJson)
 
