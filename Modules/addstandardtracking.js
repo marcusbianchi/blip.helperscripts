@@ -204,12 +204,12 @@ exports.addstandardtrackingscript = (function () {
 							blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
 						}
 						if (blipblock['$title'].search('\\[E') == -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock)){
-							blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
-							if(addContentEvent){
-								blipblock =addContentEventScript(blipblock,contentEvent,name)
-							}
+							blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)							
 						}
-						
+
+						if(addContentEvent && checkuserinteraction.checkuserinteraction(blipblock)){
+							blipblock =addContentEventScript(blipblock,contentEvent,name)
+						}
 						blipblock = addPreviousScripts(blipblock, previousSaved)
 					}					
 				}

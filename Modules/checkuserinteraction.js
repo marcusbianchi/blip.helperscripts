@@ -3,9 +3,9 @@ exports.checkuserinteraction = function (searchObject) {
     if (actions) {
         const element = actions[actions.length - 1];
         if (element['input']) {
-            if (!element['input']['bypass'])
-                return true;
+            if (element['input']['bypass']==true)
+                return false;
         }
     }
-    return false
+    return true
 }
