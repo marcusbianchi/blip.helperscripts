@@ -4,6 +4,7 @@ exports.addstandardtrackingscript = (function () {
 	var chooseAnswerScriptService = require('./../resources/chooseAnswerScript')
 	var enteringTrackingEventsService = require('./../resources/enteringTrackingEvents')
 	var lastStateUpdateEventScriptService = require('./../resources/lastStateUpdateEventScript')
+	var contentEventService = require('./../resources/contentEvent')
 
 	var tagChooseAnswer = {}
 	tagChooseAnswer['background'] = "#FFBC00"
@@ -23,6 +24,13 @@ exports.addstandardtrackingscript = (function () {
 	taglastStateUpdateEventScript['canChangeBackground'] = false;
 	taglastStateUpdateEventScript['id'] = "blip-tag-62d0f16e-9923-4f7d-b397-fb22de20d57c";
 
+	var tagContentEvent = {}
+	tagContentEvent['background'] = "#E5BD1F"
+	tagContentEvent['label'] = "SaveContent"
+	tagContentEvent['canChangeBackground'] = false;
+	tagContentEvent['id'] = "blip-tag-62d0f16e-9923-4f7d-b397-fb22de20e57c";
+
+
 
 	function UpdateLastStateEvent(selectedCard, taglastStateUpdateEventScript, blockName) {
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
@@ -30,6 +38,14 @@ exports.addstandardtrackingscript = (function () {
 		lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + blockName + "\"");
 		selectedCard['$leavingCustomActions'].push(lastStateUpdateEventScript)
 		selectedCard['$tags'].push(taglastStateUpdateEventScript)
+		return selectedCard
+	}
+
+	function addContentEventScript(selectedCard,contentEvent, blockName) {
+		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
+		contentEvent['settings']['category'] = blockName + " - conteudo"
+		selectedCard['$leavingCustomActions'].push(contentEvent)
+		selectedCard['$tags'].push(tagContentEvent)
 		return selectedCard
 	}
 
@@ -96,6 +112,9 @@ exports.addstandardtrackingscript = (function () {
 			if (action['$title'].toLowerCase() == 'Registro de eventos - Cliques'.toLowerCase())
 				return
 
+			if (action['$title'].toLowerCase() ==  'Registro de eventos - Conteudo'.toLowerCase())
+				return
+
 			if (action['$title'].toLowerCase() == 'Executar script - Update lastState'.toLowerCase())
 				return
 
@@ -154,9 +173,10 @@ exports.addstandardtrackingscript = (function () {
 		return possibleAnswers
 	}
 
-	return function (blipJson, addtoall) {
+	return function (blipJson, addtoall,addContentEvent) {
 		var checkuserinteraction = require('./checkuserinteraction')
 		var checkbotinteraction = require('./checkbotinteraction')
+		var contentEvent = contentEventService.getcontentEvent()
 		try {
 			var enteringTrackingEvents = enteringTrackingEventsService.getEnteringTrackingEventsScripts()
 
@@ -183,8 +203,13 @@ exports.addstandardtrackingscript = (function () {
 						if (possibleAnswers.length > 0) { //add only to interaction blocks    
 							blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
 						}
-						if (blipblock['$title'].search('\\[E') == -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock))
+						if (blipblock['$title'].search('\\[E') == -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock)){
 							blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+							if(addContentEvent){
+								blipblock =addContentEventScript(blipblock,contentEvent,name)
+							}
+						}
+						
 						blipblock = addPreviousScripts(blipblock, previousSaved)
 					}					
 				}

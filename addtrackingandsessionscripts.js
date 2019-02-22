@@ -11,6 +11,10 @@ var addtrackingandsession = function () {
 		if (argv['all']) {
 			addtoall = argv['all']
 		}
+		var addContentEvent = false
+		if (argv['addContentEvent']) {
+			addContentEvent = argv['addContentEvent']
+		}
 		var blipJson = {}
 		try {
 			blipJson = JSON.parse(fs.readFileSync(jsonPath))
@@ -24,7 +28,7 @@ var addtrackingandsession = function () {
 			return
 		}
 		var addstandardtracking = require ('./Modules/addstandardtracking')
-        var blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
+        var blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall,addContentEvent)
         var sessionId = require ('./Modules/addsessionid')
 		var flow = sessionId.addsessionidscript(blipJson)
 		

@@ -11,6 +11,12 @@ var addstandardtrackingscripts = function () {
 		if (argv['all']) {
 			addtoall = argv['all']
 		}
+
+		var addContentEvent = false
+		if (argv['addContentEvent']) {
+			addContentEvent = argv['addContentEvent']
+		}
+
 		var blipJson = {}
 		try {
 			blipJson = JSON.parse(fs.readFileSync(jsonPath))
@@ -24,7 +30,7 @@ var addstandardtrackingscripts = function () {
 			return
 		}
 		var addstandardtracking = require ('./Modules/addstandardtracking')
-		var flow = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
+		var flow = addstandardtracking.addstandardtrackingscript(blipJson,addtoall,addContentEvent)
 		exportfile.savefile(flow)
 
 	} catch (error) {

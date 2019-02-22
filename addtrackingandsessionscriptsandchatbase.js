@@ -15,6 +15,10 @@ var addtrackingandsessionscriptsandchatbase = function () {
 		if (argv['platform']) {
 			platform = argv['platform']
 		}
+		var addContentEvent = false
+		if (argv['addContentEvent']) {
+			addContentEvent = argv['addContentEvent']
+		}
 		var blipJson = {}
 		try {
 			blipJson = JSON.parse(fs.readFileSync(jsonPath))
@@ -29,7 +33,7 @@ var addtrackingandsessionscriptsandchatbase = function () {
 		}
 
 		var addstandardtracking = require ('./Modules/addstandardtracking')
-		var blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
+		var blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall,addContentEvent)
 
 		var addchatbaseintegration = require ('./Modules/addchatbaseintegration')
 		var blipJson = addchatbaseintegration.addchatbaseintegration(blipJson,platform)	
