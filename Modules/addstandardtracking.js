@@ -124,7 +124,7 @@ exports.addstandardtrackingscript = (function () {
 		previousSaved['tags'] = []
 		selectedCard['$tags'].forEach(function (tag) {
 			if (tag['label'] === 'ChooseAnswerScripts' ||
-				tag['label'] === 'InputScripts' ||
+				tag['label'] === 'InputScripts' || tag['label'] === 'SaveContent' ||
 				tag['label'] === 'LastStateUpdateScript')
 				return
 			previousSaved['tags'].push(tag)
