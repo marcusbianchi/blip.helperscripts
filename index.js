@@ -4,14 +4,8 @@ function validateFlowJsonFile (blipJson) {
     }
 }
 
-const addChatBaseIntegration = (blipJson) => {
+const addChatBaseIntegration = (blipJson, platform = 'Blip Chat') => {
     validateFlowJsonFile(blipJson)
-
-    let argv = require('minimist')(process.argv.slice(3));
-    let platform = 'Blip chat'
-    if (argv['platform']) {
-        platform = argv['platform']
-    }
     let addchatbaseintegration = require ('./Modules/addchatbaseintegration')
     let flow = addchatbaseintegration.addchatbaseintegration(blipJson, platform);
     return flow
@@ -31,6 +25,8 @@ const addExtras = (blipJson, flag) => {
 const addLastState = (blipJson, addToAll, addJustUserInteraction) => {
     validateFlowJsonFile(blipJson)
     let addlaststate = require ('./Modules/addlaststate')
+    if (!addtoall)
+        addtoall = false
     let flow = addlaststate.addlaststatescript(blipJson, addToAll, addJustUserInteraction)
     return flow
 }
@@ -42,49 +38,29 @@ const addSessionId = (blipJson) => {
     return flow
 }
 
-const addStandardTracking = (blipJson, flag) => {
+const addStandardTracking = (blipJson, addtoall) => {
     validateFlowJsonFile(blipJson)
-    let argv = require('minimist')(flag.slice(3));
-    let addtoall = false
-    if (argv['all']) {
-        addtoall = argv['all']
-    }
     let addstandardtracking = require ('./Modules/addstandardtracking')
     let flow = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
     return flow
 }
 
-const addTrackingAndSession = (blipJson, flag) => {
+const addTrackingAndSession = (blipJson, addtoall = false) => {
     validateFlowJsonFile(blipJson)
-    let argv = require('minimist')(flag.slice(3));
-    let addtoall = false
-    if (argv['all']) {
-        addtoall = argv['all']
-    }
     let addstandardtracking = require ('./Modules/addstandardtracking')
-    blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
+    blipJson = addstandardtracking.addstandardtrackingscript(blipJson, addtoall)
     let sessionId = require ('./Modules/addsessionid')
     let flow = sessionId.addsessionidscript(blipJson)
     return flow
 }
 
-const addTrackingAndSessionAndChatbase = (blipJson, flag) => {
+const addTrackingAndSessionAndChatbase = (blipJson, platform = 'Blip Chat', addtoall = false) => {
     validateFlowJsonFile(blipJson)
-    let argv = require('minimist')(flag.slice(3));
-    let addtoall = false
-    if (argv['all']) {
-        addtoall = argv['all']
-    }
-    let platform = 'Blip chat'
-    if (argv['platform']) {
-        platform = argv['platform']
-    }
-
     let addstandardtracking = require ('./Modules/addstandardtracking')
-    blipJson = addstandardtracking.addstandardtrackingscript(blipJson,addtoall)
+    blipJson = addstandardtracking.addstandardtrackingscript(blipJson, addtoall)
 
     let addchatbaseintegration = require ('./Modules/addchatbaseintegration')
-    blipJson = addchatbaseintegration.addchatbaseintegration(blipJson,platform)	
+    blipJson = addchatbaseintegration.addchatbaseintegration(blipJson, platform)	
     let sessionId = require ('./Modules/addsessionid')
     let flow = sessionId.addsessionidscript(blipJson)
 
