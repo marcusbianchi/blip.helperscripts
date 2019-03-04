@@ -25,8 +25,8 @@ const addExtras = (blipJson, flag) => {
 const addLastState = (blipJson, addToAll, addJustUserInteraction) => {
     validateFlowJsonFile(blipJson)
     let addlaststate = require ('./Modules/addlaststate')
-    if (!addtoall)
-        addtoall = false
+    if (!addToAll)
+        addToAll = false
     let flow = addlaststate.addlaststatescript(blipJson, addToAll, addJustUserInteraction)
     return flow
 }
