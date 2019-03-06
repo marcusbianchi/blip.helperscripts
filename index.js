@@ -74,6 +74,12 @@ const clearbot = (blipJson) => {
     return flow
 }
 
+const adjustInputContentTracking = (blipJson) => {
+    validateFlowJsonFile(blipJson)
+    let script = require('./Modules/adjustInputContentTracking')
+    let flow = script.adjustInputContentTrackingScript(blipJson)
+}
+
 module.exports = {
     addChatBaseIntegration: addChatBaseIntegration,
     addExtras: addExtras,
@@ -82,5 +88,6 @@ module.exports = {
     addStandardTracking: addStandardTracking,
     addTrackingAndSession: addTrackingAndSession,
     addTrackingAndSessionAndChatbase: addTrackingAndSessionAndChatbase,
-    clearbot: clearbot
+    clearbot: clearbot,
+    adjustInputContentTracking: adjustInputContentTracking
 }
