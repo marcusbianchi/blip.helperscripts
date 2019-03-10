@@ -33,6 +33,7 @@ exports.adjustInputContentTrackingScript = (function () {
                 blipblock["$enteringCustomActions"].forEach((action, idx) => {
                     if (action.type === 'TrackEvent' && action.settings.action === '{{input.content}}') {
                         let script = GetInputContentSubstringScript()
+                        leavingActions[idx].settings.action = "{{inputContentSubstring}}"
                         enteringActions.splice(idx, 0, script)
                     }
                 })

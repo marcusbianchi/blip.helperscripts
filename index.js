@@ -78,6 +78,7 @@ const adjustInputContentTracking = (blipJson) => {
     validateFlowJsonFile(blipJson)
     let script = require('./Modules/adjustInputContentTracking')
     let flow = script.adjustInputContentTrackingScript(blipJson)
+    return flow
 }
 
 module.exports = {
