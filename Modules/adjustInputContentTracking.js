@@ -15,10 +15,15 @@ exports.adjustInputContentTrackingScript = (function () {
         }
     }
 
+    function CleanExistingClearScritps (blipblock, actionType) {
+        return blipblock[actionType].filter(action => action['$title'] !== 'Executar script - Input Content Substring')
+    }
+
 	return function (blipJson) {
 		try {
 			Object.keys(blipJson).forEach(function (k) {
                 var blipblock = blipJson[k]		
+                blipblock["$leavingCustomActions"] = CleanExistingClearScritps(blipblock, '$leavingCustomActions')
                 let leavingActions = Object.assign([], blipblock["$leavingCustomActions"])
                 blipblock["$leavingCustomActions"].forEach((action, idx) => {
                     if (action.type === 'TrackEvent' && action.settings.action === '{{input.content}}') {
@@ -29,6 +34,7 @@ exports.adjustInputContentTrackingScript = (function () {
                 })
                 blipblock["$leavingCustomActions"] = leavingActions
 
+                blipblock["$enteringCustomActions"] = CleanExistingClearScritps(blipblock, '$enteringCustomActions')
                 let enteringActions = Object.assign([], blipblock["$enteringCustomActions"])
                 blipblock["$enteringCustomActions"].forEach((action, idx) => {
                     if (action.type === 'TrackEvent' && action.settings.action === '{{input.content}}') {
