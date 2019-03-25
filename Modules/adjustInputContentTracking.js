@@ -23,7 +23,7 @@ exports.adjustInputContentTrackingScript = (function () {
 		try {
 			Object.keys(blipJson).forEach(function (k) {
                 var blipblock = blipJson[k]		
-                blipblock["$leavingCustomActions"] = CleanExistingClearScritps(blipblock, '$leavingCustomActions')
+                // blipblock["$leavingCustomActions"] = CleanExistingClearScritps(blipblock, '$leavingCustomActions')
                 let leavingActions = Object.assign([], blipblock["$leavingCustomActions"])
                 blipblock["$leavingCustomActions"].forEach((action, idx) => {
                     if (action.type === 'TrackEvent' && action.settings.action === '{{input.content}}') {
@@ -34,12 +34,12 @@ exports.adjustInputContentTrackingScript = (function () {
                 })
                 blipblock["$leavingCustomActions"] = leavingActions
 
-                blipblock["$enteringCustomActions"] = CleanExistingClearScritps(blipblock, '$enteringCustomActions')
+                // blipblock["$enteringCustomActions"] = CleanExistingClearScritps(blipblock, '$enteringCustomActions')
                 let enteringActions = Object.assign([], blipblock["$enteringCustomActions"])
                 blipblock["$enteringCustomActions"].forEach((action, idx) => {
-                    if (action.type === 'TrackEvent' && action.settings.action === '{{input.content}}') {
+                    if (action && action.settings && action.type === 'TrackEvent' && action.settings.action === '{{input.content}}') {
                         let script = GetInputContentSubstringScript()
-                        leavingActions[idx].settings.action = "{{inputContentSubstring}}"
+                        enteringActions[idx].settings.action = "{{inputContentSubstring}}"
                         enteringActions.splice(idx, 0, script)
                     }
                 })
