@@ -44,7 +44,7 @@ exports.addstandardtrackingscript = (function () {
 	function addContentEventScript(selectedCard,contentEvent, blockName) {
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
 		contentEvent['settings']['category'] = blockName + " - conteudo"
-		selectedCard['$leavingCustomActions'].push(contentEvent)
+		selectedCard['$leavingCustomActions'].push(JSON.parse(JSON.stringify(contentEvent)))
 		selectedCard['$tags'].push(tagContentEvent)
 		return selectedCard
 	}
@@ -153,7 +153,7 @@ exports.addstandardtrackingscript = (function () {
 					element['action']['settings']['content'] &&
 					element['action']['settings']['content']['items']) {
 					for (let k = 0; k < element['action']['settings']['content']['items'].length; k++) {
-						const element2 = element['action']['settings']['content']['items'][k];
+						const element2 = element['action']['sLastStateUpdateScripts']['content']['items'][k];
 						if (element2['options']) {
 							for (let n = 0; n < element2['options'].length; n++) {
 								const element3 = element2['options'][n];
@@ -181,8 +181,8 @@ exports.addstandardtrackingscript = (function () {
 			var enteringTrackingEvents = enteringTrackingEventsService.getEnteringTrackingEventsScripts()
 
 			Object.keys(blipJson).forEach(function (k) {
-					var blipblock = blipJson[k]
-					var name = ""
+					let blipblock = blipJson[k]
+					let name = ""
 					if (!addtoall)
 						name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
 					else {
@@ -210,7 +210,7 @@ exports.addstandardtrackingscript = (function () {
 						if(addContentEvent && checkuserinteraction.checkuserinteraction(blipblock)){
 							blipblock =addContentEventScript(blipblock,contentEvent,name)
 						}
-						blipblock = addPreviousScripts(blipblock, previousSaved)
+						blipblock = addPreviousScripts(blipblock, previousSaved);
 					}					
 				}
 
