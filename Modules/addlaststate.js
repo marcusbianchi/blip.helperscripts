@@ -15,6 +15,7 @@ exports.addlaststatescript = (function () {
         lastStateUpdateEventScript['settings']['source'] = lastStateUpdateEventScript['settings']['source'].replace('#LastState#', "\"" + name.toLowerCase() + "\"");
         if (!selectedCard['$leavingCustomActions'].filter(a => a['$title'] == 'Executar script - Update lastState').length) {
             selectedCard['$leavingCustomActions'].push(lastStateUpdateEventScript)
+            selectedCard['$tags'] ? null : selectedCard['$tags'] = [];
             selectedCard['$tags'].push(taglastStateUpdateEventScript)
         } else {
             let script = selectedCard['$leavingCustomActions'].find(a => a['$title'] == 'Executar script - Update lastState')
@@ -30,7 +31,6 @@ exports.addlaststatescript = (function () {
 	return function (blipJson, addToAll, addJustUserInteraction) {
 
         try {
-            
             Object.keys(blipJson).forEach(function(k) {
                 var blipblock = blipJson[k]
                 var name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
