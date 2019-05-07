@@ -153,7 +153,7 @@ exports.addstandardtrackingscript = (function () {
 					element['action']['settings']['content'] &&
 					element['action']['settings']['content']['items']) {
 					for (let k = 0; k < element['action']['settings']['content']['items'].length; k++) {
-						const element2 = element['action']['sLastStateUpdateScripts']['content']['items'][k];
+						const element2 = element['action']['settings']['content']['items'][k];
 						if (element2['options']) {
 							for (let n = 0; n < element2['options'].length; n++) {
 								const element3 = element2['options'][n];
