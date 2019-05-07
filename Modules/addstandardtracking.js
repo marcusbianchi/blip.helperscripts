@@ -49,24 +49,16 @@ exports.addstandardtrackingscript = (function () {
 		return selectedCard
 	}
 
-	function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key, tagInputScripts) {
+	function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key, tagInputScripts, addCsmPattern) {
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
 
-		enteringTrackingEvents[0]['settings']['category'] = blockName + " - origem"
-		enteringTrackingEvents[1]['settings']['category'] = blockName
-		if (key != "onboarding")
-			selectedCard['$enteringCustomActions'] = JSON.parse(JSON.stringify(enteringTrackingEvents))
-		else {
-			selectedCard['$enteringCustomActions'] = JSON.parse(JSON.stringify([enteringTrackingEvents[1]]))
+		if(addCsmPattern){
+			enteringTrackingEvents[0]['settings']['category'] = "Origem " + blockName	
 		}
-		selectedCard['$tags'].push(tagInputScripts)
-		return selectedCard
-	}
-
-	function AddCsmPatternInputScripts(selectedCard, enteringTrackingEvents, blockName, key, tagInputScripts) {
-		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
-
-		enteringTrackingEvents[0]['settings']['category'] = "Origem " + blockName
+		else{
+		enteringTrackingEvents[0]['settings']['category'] = blockName + " - origem" 
+		}
+		
 		enteringTrackingEvents[1]['settings']['category'] = blockName
 		if (key != "onboarding")
 			selectedCard['$enteringCustomActions'] = JSON.parse(JSON.stringify(enteringTrackingEvents))
@@ -211,12 +203,9 @@ exports.addstandardtrackingscript = (function () {
 					blipblock['$enteringCustomActions'] = []
 					blipblock['$tags'] = []
 					blipblock['$leavingCustomActions'] = []
-					if (addCsmPattern) {
-						blipblock = AddCsmPatternInputScripts(blipblock, enteringTrackingEvents, name, k, tagInputScripts)
-					}
-					else {
-						blipblock = AddInputScripts(blipblock, enteringTrackingEvents, name, k, tagInputScripts)
-					}
+					
+				    blipblock = AddInputScripts(blipblock, enteringTrackingEvents, name, k, tagInputScripts, addCsmPattern)
+					
 					var possibleAnswers = searchUserInput(blipblock)
 
 					if (possibleAnswers.length > 0) { //add only to interaction blocks    
