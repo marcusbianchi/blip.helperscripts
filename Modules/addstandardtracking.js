@@ -66,7 +66,7 @@ exports.addstandardtrackingscript = (function () {
 	function AddCsmPatternInputScripts(selectedCard, enteringTrackingEvents, blockName, key, tagInputScripts) {
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
 
-		enteringTrackingEvents[0]['settings']['category'] = "Origem " + blockName
+		enteringTrackingEvents[0]['settings']['category'] = "Origem " + blockName.ToLowerCase()
 		enteringTrackingEvents[1]['settings']['category'] = blockName
 		if (key != "onboarding")
 			selectedCard['$enteringCustomActions'] = JSON.parse(JSON.stringify(enteringTrackingEvents))
