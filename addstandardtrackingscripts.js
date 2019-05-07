@@ -16,7 +16,12 @@ var addstandardtrackingscripts = function () {
 		if (argv['addContentEvent']) {
 			addContentEvent = argv['addContentEvent']
 		}
-
+	
+		var addCsmPattern = false;
+		if(argv['addCsmPattern']){
+			addCsmPattern = argv['addCsmPattern']
+		}
+		
 		var blipJson = {}
 		try {
 			blipJson = JSON.parse(fs.readFileSync(jsonPath))
@@ -30,7 +35,7 @@ var addstandardtrackingscripts = function () {
 			return
 		}
 		var addstandardtracking = require ('./Modules/addstandardtracking')
-		var flow = addstandardtracking.addstandardtrackingscript(blipJson,addtoall,addContentEvent)
+		var flow = addstandardtracking.addstandardtrackingscript(blipJson,addtoall,addContentEvent, addCsmPattern)
 		exportfile.savefile(flow)
 
 	} catch (error) {

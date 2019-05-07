@@ -41,7 +41,7 @@ exports.addstandardtrackingscript = (function () {
 		return selectedCard
 	}
 
-	function addContentEventScript(selectedCard,contentEvent, blockName) {
+	function addContentEventScript(selectedCard, contentEvent, blockName) {
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
 		contentEvent['settings']['category'] = blockName + " - conteudo"
 		selectedCard['$leavingCustomActions'].push(JSON.parse(JSON.stringify(contentEvent)))
@@ -49,10 +49,16 @@ exports.addstandardtrackingscript = (function () {
 		return selectedCard
 	}
 
-	function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key, tagInputScripts) {
+	function AddInputScripts(selectedCard, enteringTrackingEvents, blockName, key, tagInputScripts, addCsmPattern) {
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
 
-		enteringTrackingEvents[0]['settings']['category'] = blockName + " - origem"
+		if(addCsmPattern){
+			enteringTrackingEvents[0]['settings']['category'] = "Origem " + blockName.toLowerCase()	
+		}
+		else{
+		enteringTrackingEvents[0]['settings']['category'] = blockName + " - origem" 
+		}
+				
 		enteringTrackingEvents[1]['settings']['category'] = blockName
 		if (key != "onboarding")
 			selectedCard['$enteringCustomActions'] = JSON.parse(JSON.stringify(enteringTrackingEvents))
@@ -95,7 +101,7 @@ exports.addstandardtrackingscript = (function () {
 		//enteringCustomActions
 		previousSaved['enteringCustomActions'] = []
 		selectedCard['$enteringCustomActions'].forEach(function (action) {
-			if(action['$title']){
+			if (action['$title']) {
 				if (action['$title'].toLowerCase() == 'Registro de eventos - Last State'.toLowerCase())
 					return
 				if (action['$title'].toLowerCase() == 'Registro de eventos - Exibicao'.toLowerCase())
@@ -112,7 +118,7 @@ exports.addstandardtrackingscript = (function () {
 			if (action['$title'].toLowerCase() == 'Registro de eventos - Cliques'.toLowerCase())
 				return
 
-			if (action['$title'].toLowerCase() ==  'Registro de eventos - Conteudo'.toLowerCase())
+			if (action['$title'].toLowerCase() == 'Registro de eventos - Conteudo'.toLowerCase())
 				return
 
 			if (action['$title'].toLowerCase() == 'Executar script - Update lastState'.toLowerCase())
@@ -173,7 +179,7 @@ exports.addstandardtrackingscript = (function () {
 		return possibleAnswers
 	}
 
-	return function (blipJson, addtoall,addContentEvent) {
+	return function (blipJson, addtoall, addContentEvent, addCsmPattern) {
 		var checkuserinteraction = require('./checkuserinteraction')
 		var checkbotinteraction = require('./checkbotinteraction')
 		var contentEvent = contentEventService.getcontentEvent()
@@ -181,38 +187,40 @@ exports.addstandardtrackingscript = (function () {
 			var enteringTrackingEvents = enteringTrackingEventsService.getEnteringTrackingEventsScripts()
 
 			Object.keys(blipJson).forEach(function (k) {
-					let blipblock = blipJson[k]
-					let name = ""
-					if (!addtoall)
-						name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
-					else {
-						if (blipblock['$title'].search('\\]') == -1) {
-							name = blipblock['$title'].toLowerCase()
-						} else {
-							name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()
-						}
+				let blipblock = blipJson[k]
+				let name = ""
+				if (!addtoall)
+					name = blipblock['$title'].substring(blipblock['$title'].search(" ") + 1, blipblock['$title'].length).toLowerCase()
+				else {
+					if (blipblock['$title'].search('\\]') == -1) {
+						name = blipblock['$title'].toLowerCase()
+					} else {
+						name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()
 					}
-					if (blipblock['$title'].search('\\[') != -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock) || checkbotinteraction.checkbotinteraction(blipblock)) {
-						var previousSaved = savePreviousActions(blipblock, name)
-						blipblock['$enteringCustomActions'] = []
-						blipblock['$tags'] = []
-						blipblock['$leavingCustomActions'] = []
-						blipblock = AddInputScripts(blipblock, enteringTrackingEvents, name, k, tagInputScripts)
-						var possibleAnswers = searchUserInput(blipblock)
-
-						if (possibleAnswers.length > 0) { //add only to interaction blocks    
-							blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
-						}
-						if (blipblock['$title'].search('\\[E') == -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock)){
-							blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)							
-						}
-
-						if(addContentEvent && checkuserinteraction.checkuserinteraction(blipblock)){
-							blipblock =addContentEventScript(blipblock,contentEvent,name)
-						}
-						blipblock = addPreviousScripts(blipblock, previousSaved);
-					}					
 				}
+				if (blipblock['$title'].search('\\[') != -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock) || checkbotinteraction.checkbotinteraction(blipblock)) {
+					var previousSaved = savePreviousActions(blipblock, name)
+					blipblock['$enteringCustomActions'] = []
+					blipblock['$tags'] = []
+					blipblock['$leavingCustomActions'] = []
+					
+				    blipblock = AddInputScripts(blipblock, enteringTrackingEvents, name, k, tagInputScripts, addCsmPattern)
+					
+					var possibleAnswers = searchUserInput(blipblock)
+
+					if (possibleAnswers.length > 0) { //add only to interaction blocks    
+						blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
+					}
+					if (blipblock['$title'].search('\\[E') == -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock)) {
+						blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)
+					}
+
+					if (addContentEvent && checkuserinteraction.checkuserinteraction(blipblock)) {
+						blipblock = addContentEventScript(blipblock, contentEvent, name)
+					}
+					blipblock = addPreviousScripts(blipblock, previousSaved);
+				}
+			}
 
 			)
 			if (!addtoall) {
@@ -225,7 +233,7 @@ exports.addstandardtrackingscript = (function () {
 			}
 
 			return blipJson;
-		
+
 		} catch (error) {
 			console.log(error)
 		}
