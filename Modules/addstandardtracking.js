@@ -53,12 +53,12 @@ exports.addstandardtrackingscript = (function () {
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
 
 		if(addCsmPattern){
-			enteringTrackingEvents[0]['settings']['category'] = "Origem " + blockName	
+			enteringTrackingEvents[0]['settings']['category'] = "Origem " + blockName.toLowerCase()	
 		}
 		else{
 		enteringTrackingEvents[0]['settings']['category'] = blockName + " - origem" 
 		}
-		
+				
 		enteringTrackingEvents[1]['settings']['category'] = blockName
 		if (key != "onboarding")
 			selectedCard['$enteringCustomActions'] = JSON.parse(JSON.stringify(enteringTrackingEvents))
