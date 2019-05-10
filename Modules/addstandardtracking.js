@@ -5,6 +5,8 @@ exports.addstandardtrackingscript = (function () {
 	var enteringTrackingEventsService = require('./../resources/enteringTrackingEvents')
 	var lastStateUpdateEventScriptService = require('./../resources/lastStateUpdateEventScript')
 	var contentEventService = require('./../resources/contentEvent')
+	var getInputContentSubstring = require('./../resources/getInputContentSubstringScript')
+	var getInputContentSubstringScript = getInputContentSubstring.getInputContentSubstringScript()
 
 	var tagChooseAnswer = {}
 	tagChooseAnswer['background'] = "#FFBC00"
@@ -42,9 +44,10 @@ exports.addstandardtrackingscript = (function () {
 	}
 
 	function addContentEventScript(selectedCard,contentEvent, blockName) {
+		selectedCard['$leavingCustomActions'].push(JSON.parse(JSON.stringify(getInputContentSubstringScript)))
 		blockName = blockName.charAt(0).toUpperCase() + blockName.slice(1);
 		contentEvent['settings']['category'] = blockName + " - conteudo"
-		selectedCard['$leavingCustomActions'].push(JSON.parse(JSON.stringify(contentEvent)))
+		selectedCard['$leavingCustomActions'].push(JSON.parse(JSON.stringify(contentEvent)))		
 		selectedCard['$tags'].push(tagContentEvent)
 		return selectedCard
 	}
@@ -110,6 +113,10 @@ exports.addstandardtrackingscript = (function () {
 				return
 
 			if (action['$title'].toLowerCase() == 'Registro de eventos - Cliques'.toLowerCase())
+				return
+
+			
+			if (action['$title'].toLowerCase() ==  'Executar script - Input Content Substring'.toLowerCase())
 				return
 
 			if (action['$title'].toLowerCase() ==  'Registro de eventos - Conteudo'.toLowerCase())

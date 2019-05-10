@@ -1,33 +1,19 @@
 exports.adjustInputContentTrackingScript = (function () {
 	var fs = require('fs')
 
-    function GetInputContentSubstringScript(){
-        return {
-            "type": "ExecuteScript",
-            "$title": "Executar script - Input Content Substring",
-            "$invalid": false,
-            "settings": {
-                "function": "run",
-                "source": "\nfunction run(input) {\n    return input.substring(0, 255);\n}",
-                "inputVariables": ["input.content"],
-                "outputVariable": "inputContentSubstring"
-            }
-        }
-    }
-
-    function CleanExistingClearScritps (blipblock, actionType) {
-        return blipblock[actionType].filter(action => action['$title'] !== 'Executar script - Input Content Substring')
-    }
-
 	return function (blipJson) {
 		try {
+            //var getInputContentSubstring = require('./../resources/getInputContentSubstringScript')
+            var getInputContentSubstring = require('./../resources/getInputContentSubstringScript')
+            var getInputContentSubstringScript = getInputContentSubstring.GetInputContentSubstringScript()
+            console.log(getInputContentSubstringScript)
 			Object.keys(blipJson).forEach(function (k) {
                 var blipblock = blipJson[k]		
                 // blipblock["$leavingCustomActions"] = CleanExistingClearScritps(blipblock, '$leavingCustomActions')
                 let leavingActions = Object.assign([], blipblock["$leavingCustomActions"])
                 blipblock["$leavingCustomActions"].forEach((action, idx) => {
                     if (action.type === 'TrackEvent' && action.settings.action === '{{input.content}}') {
-                        let script = GetInputContentSubstringScript()
+                        let script = getInputContentSubstringScript
                         leavingActions[idx].settings.action = "{{inputContentSubstring}}"
                         leavingActions.splice(idx, 0, script)
                     }
@@ -38,7 +24,7 @@ exports.adjustInputContentTrackingScript = (function () {
                 let enteringActions = Object.assign([], blipblock["$enteringCustomActions"])
                 blipblock["$enteringCustomActions"].forEach((action, idx) => {
                     if (action && action.settings && action.type === 'TrackEvent' && action.settings.action === '{{input.content}}') {
-                        let script = GetInputContentSubstringScript()
+                        let script = getInputContentSubstringScript
                         enteringActions[idx].settings.action = "{{inputContentSubstring}}"
                         enteringActions.splice(idx, 0, script)
                     }

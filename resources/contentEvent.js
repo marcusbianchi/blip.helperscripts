@@ -12,7 +12,7 @@ const getcontentEvent = () => {
                 "sessionId": "{{sessionId}}"
             },
             "category": "Cartao pre-pago - cliques",
-            "action": "{{input.content}}"
+            "action": "{{inputContentSubstring}}"
         }
     }
 }
