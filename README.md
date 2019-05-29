@@ -70,8 +70,8 @@ Regexigy a single expression:
 ```
 
 # Addtrackingandsessionscripts
-Add standard Trackings and SessionId to all block that have the "[]" marking in the name. If you add the flag "-all" at the end will append to all blocks in the buider
-
+Add standard Trackings and SessionId to all block that have the "[]" marking in the name. If you add the flag "-all" at the end will append to all blocks in the buider If you add the flag "--searchtag=#" it will search and add the standard tracking only for the blocks marked with the tag added.
+ 
 ## Requirements
 Node.JS installed
 
@@ -128,7 +128,7 @@ Append extras of all events in the test.json with the content of "/resources/ext
 ```
 
 # Addstandardtrackingscripts
-Add standard Trackings to all block that have the bot interaction or wait user message or is marked with "[]" ont the title. If you add the flag "--all" at the end will append to all blocks in the builder. If you add the flag "--addContentEvent true" it will create a event to save the user input.
+Add standard Trackings to all block that have the bot interaction or wait user message or is marked with "[]" ont the title. If you add the flag "--all" at the end will append to all blocks in the builder. If you add the flag "--addContentEvent true" it will create a event to save the user input. If you add the flag "--searchtag=#" it will search and add the standard tracking only for the blocks marked with the tag added.
 
 ## Requirements
 Node.JS installed
@@ -152,8 +152,7 @@ Add only to "[]" marked blocks.
 Add to all blocks and save the content.
 
 ```
-    node addstandardtrackingscripts.js test.json --all --addContentEvent true
-```
+    node addstandardtrackingscripts.js test.json --all --addContentEvent true --searchtag=#
 
 ## Standard Trackings
 

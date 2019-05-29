@@ -17,6 +17,12 @@ var addstandardtrackingscripts = function () {
 			addContentEvent = argv['addContentEvent']
 		}
 
+
+		var searchtag = false
+		if (argv['searchtag']) {
+			searchtag = argv['searchtag']
+		}
+
 		var blipJson = {}
 		try {
 			blipJson = JSON.parse(fs.readFileSync(jsonPath))
@@ -30,7 +36,7 @@ var addstandardtrackingscripts = function () {
 			return
 		}
 		var addstandardtracking = require ('./Modules/addstandardtracking')
-		var flow = addstandardtracking.addstandardtrackingscript(blipJson,addtoall,addContentEvent)
+		var flow = addstandardtracking.addstandardtrackingscript(blipJson,addtoall,addContentEvent,searchtag)
 		exportfile.savefile(flow)
 
 	} catch (error) {

@@ -93,7 +93,7 @@ exports.addstandardtrackingscript = (function () {
 		return selectedCard
 	}
 
-	function savePreviousActions(selectedCard, blockName) {
+	function savePreviousActions(selectedCard) {
 		var previousSaved = {}
 		//enteringCustomActions
 		previousSaved['enteringCustomActions'] = []
@@ -180,7 +180,7 @@ exports.addstandardtrackingscript = (function () {
 		return possibleAnswers
 	}
 
-	return function (blipJson, addtoall,addContentEvent) {
+	return function (blipJson, addtoall,addContentEvent,searchtag) {
 		var checkuserinteraction = require('./checkuserinteraction')
 		var checkbotinteraction = require('./checkbotinteraction')
 		var contentEvent = contentEventService.getcontentEvent()
@@ -199,7 +199,30 @@ exports.addstandardtrackingscript = (function () {
 							name = blipblock['$title'].substring(blipblock['$title'].search("\\]") + 1, blipblock['$title'].length).toLowerCase()
 						}
 					}
-					if (blipblock['$title'].search('\\[') != -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock) || checkbotinteraction.checkbotinteraction(blipblock)) {
+					if(searchtag){
+						if (blipblock['$title'].search(searchtag) != -1){
+							blipblock['$title']=blipblock['$title'].replace(searchtag,'');
+							var previousSaved = savePreviousActions(blipblock, name)
+							blipblock['$enteringCustomActions'] = []
+							blipblock['$tags'] = []
+							blipblock['$leavingCustomActions'] = []
+							blipblock = AddInputScripts(blipblock, enteringTrackingEvents, name, k, tagInputScripts)
+							var possibleAnswers = searchUserInput(blipblock)
+	
+							if (possibleAnswers.length > 0) { //add only to interaction blocks    
+								blipblock = AddChooseAnswerScript(blipblock, name, possibleAnswers, tagChooseAnswer)
+							}
+							if (blipblock['$title'].search('\\[E') == -1 || addtoall || checkuserinteraction.checkuserinteraction(blipblock)){
+								blipblock = UpdateLastStateEvent(blipblock, taglastStateUpdateEventScript, name)							
+							}
+	
+							if(addContentEvent && checkuserinteraction.checkuserinteraction(blipblock)){
+								blipblock =addContentEventScript(blipblock,contentEvent,name)
+							}
+							blipblock = addPreviousScripts(blipblock, previousSaved);
+						}
+					}
+					else if (blipblock['$title'].search('\\[') != -1 || addtoall ||checkbotinteraction.checkbotinteraction(blipblock)) {
 						var previousSaved = savePreviousActions(blipblock, name)
 						blipblock['$enteringCustomActions'] = []
 						blipblock['$tags'] = []
