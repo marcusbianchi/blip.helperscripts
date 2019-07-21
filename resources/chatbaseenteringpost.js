@@ -1,7 +1,7 @@
 const getChatBaseEnteringPostScript = () =>{
     return {
         "type": "ProcessHttp",
-        "$title": "Requisição HTTP - ChatBase Integration User",
+        "$title": "Requisição HTTP ChatBase Integration User",
         "$invalid": false,
         "settings": {
             "headers": {},

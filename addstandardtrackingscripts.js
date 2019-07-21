@@ -36,7 +36,7 @@ var addstandardtrackingscripts = function () {
 			return
 		}
 		var addstandardtracking = require ('./Modules/addstandardtracking')
-		var flow = addstandardtracking.addstandardtrackingscript(blipJson,addtoall,addContentEvent,searchtag)
+		var flow = addstandardtracking.addstandardtrackingscript(blipJson, addtoall, addContentEvent, searchtag)
 		exportfile.savefile(flow)
 
 	} catch (error) {

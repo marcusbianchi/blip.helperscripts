@@ -1,7 +1,7 @@
 const getcontentEvent = () => {
     return {
         "type": "TrackEvent",
-        "$title": "Registro de eventos - Conteudo",
+        "$title": "Registro de eventos Conteudo",
         "$invalid": false,
         "settings": {
             "extras": {
@@ -11,7 +11,7 @@ const getcontentEvent = () => {
                 "userName": "{{contact.name}}",
                 "sessionId": "{{sessionId}}"
             },
-            "category": "Cartao pre-pago - cliques",
+            "category": "Cartao pre pago cliques",
             "action": "{{inputContentSubstring}}"
         }
     }

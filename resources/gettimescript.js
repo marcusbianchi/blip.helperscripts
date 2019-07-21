@@ -1,7 +1,7 @@
 const getTimeScript = () => {
     return {
         "type": "ExecuteScript",
-        "$title": "Executar script - GetTime Chatbase",
+        "$title": "Executar script GetTime Chatbase",
         "$invalid": false,
         "settings": {
             "function": "run",
