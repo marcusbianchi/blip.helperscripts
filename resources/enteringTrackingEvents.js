@@ -2,7 +2,7 @@ const getEnteringTrackingEventsScripts = () => {
     return [
         {
             "type": "TrackEvent",
-            "$title": "Registro de eventos - Last State",
+            "$title": "Registro de eventos Last State",
             "$invalid": false,
             "settings": {
                 "extras": {
@@ -12,13 +12,13 @@ const getEnteringTrackingEventsScripts = () => {
                     "userName": "{{contact.name}}",
                     "sessionId": "{{sessionId}}"
                 },
-                "category": "Menu cliente - origem",
+                "category": "Menu cliente origem",
                 "action": "{{lastState}}"
             }
         },
         {
             "type": "TrackEvent",
-            "$title": "Registro de eventos - Exibicao",
+            "$title": "Registro de eventos Exibicao",
             "$invalid": false,
             "settings": {
                 "extras": {

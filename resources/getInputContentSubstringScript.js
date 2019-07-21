@@ -1,7 +1,7 @@
 const getInputContentSubstringScript= () => {
     return {
         "type": "ExecuteScript",
-        "$title": "Executar script - Input Content Substring",
+        "$title": "Executar script Input Content Substring",
         "$invalid": false,
         "settings": {
             "function": "run",

@@ -1,7 +1,7 @@
 const chooseAnswerEventScript = () => {
     return {
         "type": "TrackEvent",
-        "$title": "Registro de eventos - Cliques",
+        "$title": "Registro de eventos Cliques",
         "$invalid": false,
         "settings": {
             "extras": {
@@ -11,7 +11,7 @@ const chooseAnswerEventScript = () => {
                 "userName": "{{contact.name}}",
                 "sessionId": "{{sessionId}}"
             },
-            "category": "Cartao pre-pago - cliques",
+            "category": "Cartao pre pago cliques",
             "action": "{{chooseAnswer}}"
         }
     }

@@ -1,7 +1,7 @@
 const getChatBaseLeavingPostScript = () => {
     return {
         "type": "ProcessHttp",
-        "$title": "Requisição HTTP - ChatBase Integration Bot",
+        "$title": "Requisição HTTP ChatBase Integration Bot",
         "$invalid": false,
         "settings": {
             "headers": {},
