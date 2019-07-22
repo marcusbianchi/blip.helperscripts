@@ -16,8 +16,11 @@ exports.addstandardtrackingscript = (function () {
 
 	function UpdateLastStateEvent(block, blockName) {
 		let lastStateUpdateEventScript = lastStateUpdateEventScriptService.getLastStateUpdateScript(blockName)
-		block['$leavingCustomActions'].push(lastStateUpdateEventScript)
-		block['$tags'].push(Tags.LastStateUpdateEventScript)
+
+		if (actionsDontContainTracking(block['$leavingCustomActions'], lastStateUpdateEventScript)) {
+			block['$leavingCustomActions'].push(lastStateUpdateEventScript)
+			block['$tags'].push(Tags.LastStateUpdateEventScript)
+		}
 		return block
 	}
 
@@ -25,24 +28,30 @@ exports.addstandardtrackingscript = (function () {
 		let getInputContentSubstringScriptCopy = copyObject(getInputContentSubstringScript)
 		let contentEventCopy = copyObject(contentEvent)
 
-		block['$leavingCustomActions'].push(getInputContentSubstringScriptCopy)
-		contentEvent['settings']['category'] = capitalize(blockName) + " conteudo"
-		block['$leavingCustomActions'].push(contentEventCopy)
-		block['$tags'].push(Tags.ContentEvent)
+		if (actionsDontContainTracking(block['$leavingCustomActions'], getInputContentSubstringScriptCopy)) {
+			block['$leavingCustomActions'].push(getInputContentSubstringScriptCopy)
+			contentEvent['settings']['category'] = capitalize(blockName) + " conteudo"
+			block['$leavingCustomActions'].push(contentEventCopy)
+			block['$tags'].push(Tags.ContentEvent)
+		}
 		return block
 	}
 
 	function AddInputScripts(block, enteringTrackingEvents, blockName, key) {
 		let enteringTrackingEventsCopy = copyObject(enteringTrackingEvents)
+		let lastStateTracking = enteringTrackingEventsCopy[0]
+		let displayMessageTracking = enteringTrackingEventsCopy[1]
+		
+		if (actionsDontContainTracking(block['$enteringCustomActions'], displayMessageTracking)) {
+			lastStateTracking['settings']['category'] = blockName + " origem"
+			displayMessageTracking['settings']['category'] = blockName
 
-		enteringTrackingEventsCopy[0]['settings']['category'] = blockName + " origem"
-		enteringTrackingEventsCopy[1]['settings']['category'] = blockName
+			if (key !== "onboarding")
+				block['$enteringCustomActions'].push(lastStateTracking)
+			block['$enteringCustomActions'].push(displayMessageTracking)
 
-		if (key !== "onboarding")
-			block['$enteringCustomActions'].push(enteringTrackingEventsCopy[0])
-		block['$enteringCustomActions'].push(enteringTrackingEventsCopy[1])
-
-		block['$tags'].push(Tags.InputScripts)
+			block['$tags'].push(Tags.InputScripts)
+		}
 		return block
 	}
 
@@ -50,10 +59,11 @@ exports.addstandardtrackingscript = (function () {
 		let chooseAnswerScript = chooseAnswerScriptService.getChooseAnswerScript(JSON.stringify(possibleAnswers))
 		let chooseAnswerEventCopy = copyObject(chooseAnswerEventService.chooseAnswerEventScript())
 
-		chooseAnswerEventCopy['settings']['category'] = blockName + " cliques"
-		block['$leavingCustomActions'] = block['$leavingCustomActions'].concat([chooseAnswerScript, chooseAnswerEventCopy])
-		block['$tags'].push(Tags.ChooseAnswer)
-
+		if (actionsDontContainTracking(block['$leavingCustomActions'], chooseAnswerScript)) {
+			chooseAnswerEventCopy['settings']['category'] = blockName + " cliques"
+			block['$leavingCustomActions'] = block['$leavingCustomActions'].concat([chooseAnswerScript, chooseAnswerEventCopy])
+			block['$tags'].push(Tags.ChooseAnswer)
+		}
 		return block
 	}
 
@@ -99,7 +109,6 @@ exports.addstandardtrackingscript = (function () {
 					answers = answers.concat(items)
 			}
 		}
-
 		return answers
 	}
 
@@ -115,6 +124,7 @@ exports.addstandardtrackingscript = (function () {
 	let blockHasBrackets = (block) => block['$title'].includes('[')
 	let removesearchTag = (block, searchTag) => block['$title'].replace(searchTag ? searchTag : '', '')
 	let copyObject = (object) => JSON.parse(JSON.stringify(object))
+	let actionsDontContainTracking = (actions, tracking) => actions.filter(a => a.title === tracking.title).length === 0;
 
 	return function (blipJson, addtoall, addContentEvent, searchTag) {
 		var checkuserinteraction = require('./checkuserinteraction')
